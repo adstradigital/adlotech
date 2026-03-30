@@ -51,7 +51,7 @@ const RoadmapTimeline = ({ steps }) => {
   ]
 
   return (
-    <div className="relative w-full py-14 md:py-16 px-4 overflow-hidden bg-white">
+    <div className="relative w-full pt-14 md:pt-16 pb-28 md:pb-32 px-4 overflow-visible bg-white">
       <div className="max-w-7xl mx-auto relative h-[840px] lg:h-[880px] hidden md:block">
         <div className="absolute inset-0 flex items-center justify-center">
           <svg viewBox="0 0 1000 900" className="w-full h-full drop-shadow-[0_16px_36px_rgba(0,0,0,0.14)]" preserveAspectRatio="none">

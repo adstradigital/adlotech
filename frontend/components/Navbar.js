@@ -1,8 +1,7 @@
 
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowDown, FiBookOpen, FiBriefcase, FiTrendingUp, FiGlobe } from 'react-icons/fi'
 import BrandLogo from './BrandLogo'
@@ -71,7 +70,36 @@ const Navbar = () => {
   const [isSendingContact, setIsSendingContact] = useState(false)
   const [contactStatus, setContactStatus] = useState(null) // null | success | error
   const [contactError, setContactError] = useState('')
-  const pathname = usePathname()
+
+  const openMenu = useCallback((section = '/about') => {
+    setHoveredLink(section)
+    setIsMenuOpen(true)
+
+    if (typeof window === 'undefined') return
+
+    if (window.history.state?.menuOverlay) {
+      window.history.replaceState(
+        { ...(window.history.state || {}), menuOverlay: true, menuSection: section },
+        '',
+        window.location.href
+      )
+      return
+    }
+
+    window.history.pushState(
+      { ...(window.history.state || {}), menuOverlay: true, menuSection: section },
+      '',
+      window.location.href
+    )
+  }, [])
+
+  const closeMenu = useCallback(() => {
+    if (typeof window !== 'undefined' && window.history.state?.menuOverlay) {
+      window.history.back()
+      return
+    }
+    setIsMenuOpen(false)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,12 +111,24 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleOpenContactMenu = () => {
-      setHoveredLink('/contact')
-      setIsMenuOpen(true)
+      openMenu('/contact')
     }
 
     window.addEventListener('open-contact-menu', handleOpenContactMenu)
     return () => window.removeEventListener('open-contact-menu', handleOpenContactMenu)
+  }, [openMenu])
+
+  useEffect(() => {
+    const handlePopState = (event) => {
+      const menuOverlayOpen = Boolean(event.state?.menuOverlay)
+      setIsMenuOpen(menuOverlayOpen)
+      if (menuOverlayOpen && event.state?.menuSection) {
+        setHoveredLink(event.state.menuSection)
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
   // Lock body scroll when menu is open
@@ -180,7 +220,7 @@ const Navbar = () => {
 
               {/* Menu Button */}
               <button
-                onClick={() => setIsMenuOpen(true)}
+                onClick={() => openMenu('/about')}
                 className="group flex items-center gap-3 transition-colors duration-300 font-bold tracking-widest text-xs text-gray-900 hover:text-blue-600"
               >
                 <div className="flex flex-col gap-[4px] justify-center items-end">
@@ -227,16 +267,16 @@ const Navbar = () => {
 
             {/* Overlay Header (Close Button) */}
             <div className="absolute top-0 left-0 right-0 w-full px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center z-20">
-              <Link 
-                href="/" 
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                type="button"
+                onClick={closeMenu}
                 className="inline-flex"
-               >
+              >
                 <BrandLogo className="max-w-[75px] sm:max-w-[85px]" />
-              </Link>
-              <Link
-                href="/"
-                onClick={() => setIsMenuOpen(false)}
+              </button>
+              <button
+                type="button"
+                onClick={closeMenu}
                 className="group flex items-center gap-3 text-white transition-colors duration-300 font-bold tracking-widest text-sm hover:text-gray-300"
               >
                 Close
@@ -245,7 +285,7 @@ const Navbar = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </span>
-              </Link>
+              </button>
             </div>
 
             {/* Menu Content Container */}
@@ -405,7 +445,7 @@ const Navbar = () => {
                         <ul className="space-y-4">
                           {menuContent[hoveredLink]?.links?.map((sublink, idx) => (
                             <li key={idx}>
-                              <Link href={sublink.href} onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white flex items-center gap-2 group transition-colors text-lg font-medium">
+                              <Link href={sublink.href} onClick={closeMenu} className="text-gray-300 hover:text-white flex items-center gap-2 group transition-colors text-lg font-medium">
                                 <span className="w-4 h-[2px] bg-blue-500 mr-2 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300"></span>
                                 {sublink.label}
                               </Link>

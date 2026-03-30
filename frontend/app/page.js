@@ -162,9 +162,12 @@ export default function Home() {
                   >
                     Start Learning
                   </button>
-                  <button className="px-8 py-4 bg-white text-slate-700 rounded-full font-bold border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all duration-300">
+                  <Link
+                    href="/syllabus"
+                    className="px-8 py-4 bg-white text-slate-700 rounded-full font-bold border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all duration-300"
+                  >
                     View Syllabus
-                  </button>
+                  </Link>
                 </div>
               </div>
             </AnimatedSection>
@@ -278,7 +281,7 @@ export default function Home() {
       <HomeAbout />
 
       {/* Roadmap Section */}
-      <section className="pt-10 pb-4 md:pt-12 md:pb-6 bg-white relative overflow-hidden">
+      <section className="pt-10 pb-10 md:pt-12 md:pb-14 bg-white relative overflow-visible">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection>
             <div className="text-center mb-10 md:mb-12">
