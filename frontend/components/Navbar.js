@@ -81,6 +81,16 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const handleOpenContactMenu = () => {
+      setHoveredLink('/contact')
+      setIsMenuOpen(true)
+    }
+
+    window.addEventListener('open-contact-menu', handleOpenContactMenu)
+    return () => window.removeEventListener('open-contact-menu', handleOpenContactMenu)
+  }, [])
+
   // Lock body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -222,7 +232,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="inline-flex"
                >
-                <BrandLogo className="max-w-[92px] sm:max-w-[104px]" />
+                <BrandLogo className="max-w-[75px] sm:max-w-[85px]" />
               </Link>
               <Link
                 href="/"

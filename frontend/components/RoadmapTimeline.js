@@ -11,7 +11,7 @@ const TeardropPin = ({ color, isHovered }) => (
     transition={{ type: "spring", stiffness: 400, damping: 17 }}
     className="relative flex flex-col items-center cursor-pointer"
   >
-    <svg width="70" height="95" viewBox="0 0 100 135" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-2xl">
+    <svg width="58" height="79" viewBox="0 0 100 135" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-2xl">
       <path 
         d="M50 135C50 135 100 88 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 88 50 135 50 135Z" 
         fill={color} 
@@ -51,8 +51,8 @@ const RoadmapTimeline = ({ steps }) => {
   ]
 
   return (
-    <div className="relative w-full py-24 px-4 overflow-hidden bg-white">
-      <div className="max-w-7xl mx-auto relative h-[1000px] hidden md:block">
+    <div className="relative w-full py-14 md:py-16 px-4 overflow-hidden bg-white">
+      <div className="max-w-7xl mx-auto relative h-[840px] lg:h-[880px] hidden md:block">
         <div className="absolute inset-0 flex items-center justify-center">
           <svg viewBox="0 0 1000 900" className="w-full h-full drop-shadow-[0_16px_36px_rgba(0,0,0,0.14)]" preserveAspectRatio="none">
              <defs>
@@ -144,7 +144,7 @@ const RoadmapTimeline = ({ steps }) => {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="absolute -top-14 whitespace-nowrap px-4 py-2 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl z-10 flex flex-col items-center group/label transition-all hover:scale-105"
+                className="absolute -top-12 whitespace-nowrap px-4 py-2 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl z-10 flex flex-col items-center group/label transition-all hover:scale-105"
               >
                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1.5">{step.month}</span>
                 <div className="flex items-center gap-2">
@@ -190,7 +190,7 @@ const RoadmapTimeline = ({ steps }) => {
       </div>
 
       {/* Mobile view */}
-      <div className="md:hidden space-y-12">
+      <div className="md:hidden space-y-8">
         {steps.map((step, index) => (
           <motion.div 
             key={index}

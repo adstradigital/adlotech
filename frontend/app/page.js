@@ -8,7 +8,7 @@ import { SiGithub, SiMysql, SiHtml5, SiJavascript, SiBootstrap, SiDjango } from 
 import AnimatedSection from '@/components/AnimatedSection'
 import RoadmapTimeline from '@/components/RoadmapTimeline'
 import HomeAbout from '@/components/HomeAbout'
-import Gallery from '@/components/Gallery'
+import MemoryTimeline from '@/components/MemoryTimeline'
 import CodeTypewriter from '@/components/CodeTypewriter'
 
 const SyntaxHighlightedCode = () => (
@@ -133,34 +133,35 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-white pt-24 pb-16 lg:pt-24 lg:pb-20 overflow-hidden">
+      <section className="relative bg-white pt-20 pb-12 lg:pt-24 lg:pb-14 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
 
             {/* Left Content Area */}
             <AnimatedSection>
               <div className="max-w-2xl relative z-20">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-8 shadow-sm">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6 shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
                   <span className="text-xs font-bold text-blue-700 tracking-wider uppercase">Adlotech Masterclass</span>
                 </div>
 
-                <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
+                <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
                   Code Your <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">Future Today.</span>
                 </h1>
 
-                <p className="text-xl text-slate-600 mb-10 leading-relaxed font-medium">
+                <p className="text-xl text-slate-600 mb-7 leading-relaxed font-medium">
                   Master Python, Data Science, and Full-Stack Web Development through hands-on projects, industry mentorship, and cutting-edge curriculum.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4">
-                  <Link
-                    href="/contact"
+                  <button
+                    type="button"
+                    onClick={() => window.dispatchEvent(new Event('open-contact-menu'))}
                     className="px-8 py-4 bg-slate-900 text-white rounded-full font-bold hover:bg-slate-800 hover:-translate-y-0.5 transition-all duration-300 shadow-xl shadow-slate-900/20"
                   >
                     Start Learning
-                  </Link>
+                  </button>
                   <button className="px-8 py-4 bg-white text-slate-700 rounded-full font-bold border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all duration-300">
                     View Syllabus
                   </button>
@@ -277,17 +278,17 @@ export default function Home() {
       <HomeAbout />
 
       {/* Roadmap Section */}
-      <section className="pt-16 pb-8 bg-white relative overflow-hidden">
+      <section className="pt-10 pb-4 md:pt-12 md:pb-6 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection>
-            <div className="text-center mb-16">
+            <div className="text-center mb-10 md:mb-12">
               <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-widest uppercase text-blue-600 border border-blue-200 rounded-full bg-blue-50">
                 Your Journey
               </span>
-              <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
                 6-Month <span className="text-blue-600">Roadmap</span> to Success
               </h2>
-              <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                 A visually guided masterclass taking you from foundation to full-stack mastery.
               </p>
             </div>
@@ -330,10 +331,10 @@ export default function Home() {
         </div>
       </section>
 
-      <Gallery />
+      <MemoryTimeline />
 
       {/* Modernized Why Python Section */}
-      <section className="py-32 relative overflow-hidden">
+      <section className="py-20 md:py-24 relative overflow-hidden">
         {/* Blue-purple cinematic tint to match the hero style */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/85 to-purple-900/90 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(96,165,250,0.25)_0%,_transparent_45%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.28)_0%,_transparent_55%)] pointer-events-none" />
@@ -343,15 +344,15 @@ export default function Home() {
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[140px] animate-pulse delay-1000 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 md:mb-14">
             <AnimatedSection>
-              <h2 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-[0.9]">
+              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-[0.95]">
                 Why ADLOTECH <br className="hidden md:block" /> Focuses Only on <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 drop-shadow-[0_0_25px_rgba(96,165,250,0.5)]">Python</span>
               </h2>
             </AnimatedSection>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 md:gap-10 items-start">
             {/* Left Side: The Narrative Card */}
             <AnimatedSection delay={0.2}>
               <div className="relative group">

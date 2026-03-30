@@ -11,14 +11,14 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#f4f4f5] border-t border-gray-200 pt-14 pb-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-[auto_auto_auto_auto] gap-y-8 md:gap-x-12 xl:gap-x-0 mb-5 items-start xl:justify-between">
           
           {/* Section 1: Minimal Branding */}
-          <div className="space-y-4">
-            <div className="flex flex-col">
+          <div className="space-y-4 justify-self-start text-left">
+            <div className="flex flex-col items-start">
               <Link href="/" className="inline-block transition-transform hover:scale-105 duration-300">
-                <BrandLogo className="max-w-[140px]" />
+                <BrandLogo className="max-w-[47px]" />
               </Link>
               <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-gray-400">
                 A training institute by <a href="https://adstradigital.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">Adstra Digital</a>
@@ -31,7 +31,7 @@ const Footer = () => {
           </div>
 
           {/* Section 2: Links - Simplified */}
-          <div className="xl:min-w-[140px]">
+          <div className="md:pt-14 xl:min-w-[140px]">
             <h4 className="text-gray-900 font-black text-xs uppercase tracking-widest mb-8 flex items-center">
               Explore
               <span className="w-8 h-[1px] bg-gray-300 ml-3"></span>
@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
 
           {/* Section 3: Contact - Minimalist Style */}
-          <div className="xl:min-w-[260px]">
+          <div className="md:pt-14 xl:min-w-[260px]">
             <h4 className="text-gray-900 font-black text-xs uppercase tracking-widest mb-8 flex items-center">
               Connect
               <span className="w-8 h-[1px] bg-gray-300 ml-3"></span>
@@ -83,7 +83,7 @@ const Footer = () => {
           </div>
 
           {/* Section 4: Accreditations - Clean Badges */}
-          <div className="space-y-8 xl:min-w-[320px]">
+          <div className="md:pt-14 space-y-8 xl:min-w-[320px]">
             <h4 className="text-gray-900 font-black text-xs uppercase tracking-widest flex items-center">
               Quality Assurance
               <span className="w-8 h-[1px] bg-gray-300 ml-3"></span>
@@ -156,3 +156,4 @@ const Footer = () => {
 }
 
 export default Footer
+

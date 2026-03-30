@@ -1,6 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
-import { FiCheckCircle, FiShield, FiAward } from 'react-icons/fi'
+import { FiShield, FiAward } from 'react-icons/fi'
 import AnimatedSection from './AnimatedSection'
 
 const HomeAbout = () => {
@@ -33,8 +32,8 @@ const HomeAbout = () => {
                     <FiShield className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-1">ISO–IAF Certification</h4>
-                    {/* <p className="text-sm text-slate-500 italic">Expected within a month — currently under process.</p> */}
+                    <h4 className="font-bold text-slate-900 mb-1">ISO-IAF Certification</h4>
+                    {/* <p className="text-sm text-slate-500 italic">Expected within a month - currently under process.</p> */}
                   </div>
                 </div>
                 <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:shadow-md">
@@ -55,6 +54,13 @@ const HomeAbout = () => {
               <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-[2.5rem] blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000" />
               
               <div className="relative aspect-square md:aspect-video lg:aspect-square bg-slate-900 rounded-[2rem] overflow-hidden shadow-2xl border border-slate-800 flex items-center justify-center p-8">
+                <img
+                  src="/images/imageee05.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover opacity-55"
+                  loading="lazy"
+                />
                 {/* Visual representation of Code/Academy */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60 z-10" />
                 <div className="text-center z-20">
@@ -96,4 +102,5 @@ const HomeAbout = () => {
 }
 
 export default HomeAbout
+
 
