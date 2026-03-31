@@ -10,6 +10,7 @@ import RoadmapTimeline from '@/components/RoadmapTimeline'
 import HomeAbout from '@/components/HomeAbout'
 import MemoryTimeline from '@/components/MemoryTimeline'
 import CodeTypewriter from '@/components/CodeTypewriter'
+import FAQ from '@/components/FAQ'
 
 const SyntaxHighlightedCode = () => (
   <div className="text-slate-600/90 font-medium pb-6">
@@ -475,6 +476,8 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      <FAQ />
     </>
   )
 }

@@ -16,8 +16,7 @@ const menuContent = {
   '/about': {
     title: 'About Us',
     description: 'ADLOTECH is a proud subsidiary of Adstra Digital, created with a singular mission: to deliver specialized, future-ready programming education. We are currently under the ISO–IAF certification process, expected to be received within a month, ensuring that our training standards meet the highest levels of global quality and credibility.',
-    links: [],
-    image: '/images/contact-bg.jpg'
+    links: []
   },
   '/services': {
     title: 'What do we do',
@@ -42,8 +41,7 @@ const menuContent = {
         desc: 'ISO–IAF certification ensures quality, trust, and recognition.',
         icon: FiGlobe 
       }
-    ],
-    image: '/images/services-bg.jpg'
+    ]
   },
   '/contact': {
     title: 'Get in Touch',
@@ -52,8 +50,7 @@ const menuContent = {
       { label: 'info@adlotech.com', href: 'mailto:info@adlotech.com' },
       { label: 'Support Center', href: '#' },
       { label: 'Visit our Campus', href: '#' }
-    ],
-    image: '/images/about-bg.png'
+    ]
   }
 }
 
@@ -244,27 +241,6 @@ const Navbar = () => {
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 min-h-screen bg-[#111111] z-50 flex flex-col justify-center overflow-hidden"
           >
-            {/* Full Screen Background Image */}
-            <AnimatePresence mode="wait">
-              {menuContent[hoveredLink]?.image && (
-                <motion.div
-                  key={`bg-${hoveredLink}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.5 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="absolute inset-0 z-0 pointer-events-none"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/80 z-10" />
-                  <img 
-                    src={menuContent[hoveredLink].image} 
-                    alt="Background" 
-                    className="w-full h-full object-cover filter brightness-50"
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-
             {/* Overlay Header (Close Button) */}
             <div className="absolute top-0 left-0 right-0 w-full px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center z-20">
               <button
