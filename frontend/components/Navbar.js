@@ -1,6 +1,7 @@
 
 'use client'
 import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowDown, FiBookOpen, FiBriefcase, FiTrendingUp, FiGlobe } from 'react-icons/fi'
@@ -239,8 +240,35 @@ const Navbar = () => {
             animate={{ opacity: 1, clipPath: 'circle(150% at 100% 0%)' }}
             exit={{ opacity: 0, clipPath: 'circle(0% at 100% 0%)' }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 min-h-screen bg-[#111111] z-50 flex flex-col justify-center overflow-hidden"
+            className="fixed inset-0 min-h-screen z-50 flex flex-col justify-center overflow-hidden"
           >
+            {/* Full-page background image — changes per section */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={hoveredLink + '-fullbg'}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                className="absolute inset-0 z-0"
+              >
+                <Image
+                  src={
+                    hoveredLink === '/about'
+                      ? '/images/about.png'
+                      : hoveredLink === '/services'
+                      ? '/images/services.png'
+                      : '/images/contact.png'
+                  }
+                  alt="Menu background"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                {/* Gradient: transparent at top (shows faces) → dark at bottom (readable content) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/15" />
+              </motion.div>
+            </AnimatePresence>
             {/* Overlay Header (Close Button) */}
             <div className="absolute top-0 left-0 right-0 w-full px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center z-20">
               <button
@@ -265,7 +293,7 @@ const Navbar = () => {
             </div>
 
             {/* Menu Content Container */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 mt-16 md:mt-0 flex flex-col md:flex-row items-center justify-between h-full py-10 md:py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 flex flex-col md:flex-row items-end justify-between h-full pb-10 md:pb-14 pt-24">
               
               {/* Left Side: Navigation Links */}
               <div className="w-full md:w-1/2">
@@ -297,7 +325,7 @@ const Navbar = () => {
               </div>
 
               {/* Right Side: Dynamic Content Panel */}
-              <div className="hidden md:flex w-full md:w-1/2 flex-col justify-center pl-16 border-l border-white/10 h-full relative py-20">
+              <div className="hidden md:flex w-full md:w-1/2 flex-col justify-end pl-14 border-l border-white/10 relative pb-1">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={hoveredLink}
@@ -307,12 +335,12 @@ const Navbar = () => {
                     transition={{ duration: 0.3 }}
                     className="max-w-xl relative z-10"
                   >
-                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 tracking-tight leading-tight filter drop-shadow-md">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight leading-tight filter drop-shadow-md">
                       {menuContent[hoveredLink]?.title}
                     </h3>
 
                     {hoveredLink === '/contact' ? (
-                      <div className="flex flex-col gap-5 w-full max-w-sm">
+                      <div className="flex flex-col gap-3 w-full max-w-sm">
                         <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">
                           <input
                             type="text"
@@ -390,24 +418,24 @@ const Navbar = () => {
                         </div>
                       </div>
                     ) : hoveredLink === '/services' ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+                      <div className="grid grid-cols-2 gap-3 w-full">
                         {menuContent['/services'].items.map((item, idx) => (
                           <motion.div
                             key={idx}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 + idx * 0.1 }}
-                            className="group/card relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-blue-500/50 transition-all duration-300 flex flex-col gap-3"
+                            transition={{ delay: 0.05 + idx * 0.07 }}
+                            className="group/card relative p-4 rounded-xl bg-white/8 border border-white/10 hover:bg-white/12 hover:border-blue-500/50 transition-all duration-300 flex flex-col gap-2"
                           >
-                            <div className="flex items-center gap-4">
-                              <div className="p-3 rounded-xl bg-blue-500/10 text-blue-400 group-hover/card:bg-blue-500 group-hover/card:text-white transition-all duration-300">
-                                <item.icon className="w-6 h-6" />
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover/card:bg-blue-500 group-hover/card:text-white transition-all duration-300">
+                                <item.icon className="w-4 h-4" />
                               </div>
-                              <h4 className="text-lg font-bold text-white group-hover/card:text-blue-400 transition-colors">
+                              <h4 className="text-sm font-bold text-white group-hover/card:text-blue-400 transition-colors leading-tight">
                                 {item.title}
                               </h4>
                             </div>
-                            <p className="text-sm text-gray-400 leading-relaxed">
+                            <p className="text-xs text-gray-400 leading-relaxed">
                               {item.desc}
                             </p>
                           </motion.div>
@@ -415,13 +443,13 @@ const Navbar = () => {
                       </div>
                     ) : (
                       <>
-                        <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-8 whitespace-pre-line">
+                        <p className="text-gray-300 leading-relaxed text-sm mb-4 whitespace-pre-line">
                           {menuContent[hoveredLink]?.description}
                         </p>
-                        <ul className="space-y-4">
+                        <ul className="space-y-2">
                           {menuContent[hoveredLink]?.links?.map((sublink, idx) => (
                             <li key={idx}>
-                              <Link href={sublink.href} onClick={closeMenu} className="text-gray-300 hover:text-white flex items-center gap-2 group transition-colors text-lg font-medium">
+                              <Link href={sublink.href} onClick={closeMenu} className="text-gray-300 hover:text-white flex items-center gap-2 group transition-colors text-base font-medium">
                                 <span className="w-4 h-[2px] bg-blue-500 mr-2 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300"></span>
                                 {sublink.label}
                               </Link>
