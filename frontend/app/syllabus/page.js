@@ -255,8 +255,12 @@ export default function SyllabusPage() {
 
             <div className="mt-5 pt-4 border-t border-slate-200">
               <p className="text-sm font-black uppercase tracking-[0.16em] text-blue-700 mb-2">Enquire Now</p>
-              <p className="text-slate-700 font-semibold">+91 956 756 8185</p>
-              <p className="text-slate-700 font-semibold">info@adlotech.com</p>
+              <a href="tel:+919567568185" className="block text-slate-700 font-semibold hover:text-blue-700 transition-colors">
+                +91 956 756 8185
+              </a>
+              <a href="mailto:info@adlotech.com" className="block text-slate-700 font-semibold hover:text-blue-700 transition-colors">
+                info@adlotech.com
+              </a>
             </div>
           </article>
         </div>
