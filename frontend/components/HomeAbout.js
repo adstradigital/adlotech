@@ -11,43 +11,6 @@ const HomeAbout = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <AnimatedSection>
-            <div className="relative">
-              <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-blue-600 border border-blue-100 rounded-full bg-blue-50/50">
-                Who We Are
-              </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight tracking-tight">
-                Delivering Specialized <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                  Future-Ready Education
-                </span>
-              </h2>
-              <p className="text-lg text-slate-600 leading-relaxed mb-8 font-medium">
-                ADLOTECH is a proud subsidiary of <span className="text-blue-600 font-bold">Adstra Digital</span>, created with a singular mission: to deliver specialized programming education that bridges the gap between traditional learning and industry demands.
-              </p>
-              
-              <div className="flex flex-col gap-4">
-                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:shadow-md">
-                  <div className="p-2 rounded-lg bg-blue-100 text-blue-600">
-                    <FiShield className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 mb-1">ISO-IAF Certification</h4>
-                    {/* <p className="text-sm text-slate-500 italic">Expected within a month - currently under process.</p> */}
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:shadow-md">
-                  <div className="p-2 rounded-lg bg-indigo-100 text-indigo-600">
-                    <FiAward className="w-5 h-5" />
-                  </div>
-                  <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                    Ensuring that our training standards meet the highest levels of global quality and credibility.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
           <AnimatedSection delay={0.2}>
             <div className="relative group">
               {/* Decorative Frame */}
@@ -93,6 +56,43 @@ const HomeAbout = () => {
                 {/* </div> */}
                 {/* <p className="text-sm font-black text-slate-800">ISO Standards Compliant</p> */}
               {/* </motion.div> */}
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <div className="relative">
+              <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase text-blue-600 border border-blue-100 rounded-full bg-blue-50/50">
+                Who We Are
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight tracking-tight">
+                Delivering Specialized <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                  Future-Ready Education
+                </span>
+              </h2>
+              <p className="text-lg text-slate-600 leading-relaxed mb-8 font-medium">
+                ADLOTECH is a proud subsidiary of <span className="text-blue-600 font-bold">Adstra Digital</span>, created with a singular mission: to deliver specialized programming education that bridges the gap between traditional learning and industry demands.
+              </p>
+              
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:shadow-md">
+                  <div className="p-2 rounded-lg bg-blue-100 text-blue-600">
+                    <FiShield className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">ISO-IAF Certification</h4>
+                    {/* <p className="text-sm text-slate-500 italic">Expected within a month - currently under process.</p> */}
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:shadow-md">
+                  <div className="p-2 rounded-lg bg-indigo-100 text-indigo-600">
+                    <FiAward className="w-5 h-5" />
+                  </div>
+                  <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                    Ensuring that our training standards meet the highest levels of global quality and credibility.
+                  </p>
+                </div>
+              </div>
             </div>
           </AnimatedSection>
         </div>

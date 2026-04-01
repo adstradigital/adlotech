@@ -28,12 +28,12 @@ const RoadmapTimeline = ({ steps }) => {
   // PRECISION COORDINATES for the 6-pin "Masterpiece" SVG
   // Equidistant coordinates calculated along the roadmap dashPath curve
   const desktopPositions = [
-    { x: '72.3%', y: '81.4%' }, // Month 1 - Python
-    { x: '47.5%', y: '59.3%' }, // Month 2 - MySQL
-    { x: '49.0%', y: '35.9%' }, // Month 3 - Web Foundations (HTML/CSS/JS)
-    { x: '68.7%', y: '14.8%' }, // Month 4 - Django
-    { x: '39.0%', y: '2.7%' },  // Month 5 - React
-    { x: '7.4%',  y: '-3.4%' }  // Month 6 - Full Stack Implementation
+    { x: '7.4%',  y: '-3.4%' }, // Month 1 (was 6)
+    { x: '39.0%', y: '2.7%' },  // Month 2 (was 5)
+    { x: '68.7%', y: '14.8%' }, // Month 3 (was 4)
+    { x: '49.0%', y: '35.9%' }, // Month 4 (was 3)
+    { x: '47.5%', y: '59.3%' }, // Month 5 (was 2)
+    { x: '72.3%', y: '81.4%' }  // Month 6 (was 1)
   ]
 
   // Smooth curvy S-road: narrow at top, wider at bottom
@@ -42,16 +42,16 @@ const RoadmapTimeline = ({ steps }) => {
   const roadSurface = `${leftEdgeP} L 50 50 C 350 85, 545 116, 705 160 C 885 210, 900 274, 825 318 C 730 372, 560 410, 510 485 C 470 545, 610 600, 745 695 C 850 768, 900 840, 940 900 Z`
   const dashPath = "M 810 900 C 770 840, 720 770, 620 700 C 500 620, 380 560, 410 500 C 450 430, 620 390, 700 330 C 770 280, 760 220, 610 170 C 470 120, 300 95, 20 50"
   const desktopCardPlacement = [
-    { className: 'left-full top-0 ml-4', initialY: 0 }, // Month 1 (Bottom Right) -> Side Right (x: 72-96%)
-    { className: 'top-full left-0 mt-2', initialY: -10 }, // Month 2 (Middle Bottom) -> Below Right (x: 47-71%)
-    { className: 'right-full top-0 mr-4', initialY: 0 }, // Month 3 (Middle Top) -> Side Left (x: 25-49%)
-    { className: 'top-full left-0 mt-2', initialY: -10 }, // Month 4 (Top Right) -> Below Right (x: 68-92%)
-    { className: 'left-full top-0 ml-4', initialY: 0 }, // Month 5 (Blue, Top Left) -> Side Right (x: 39-63%)
-    { className: 'top-full left-0 mt-2', initialY: -10 } // Month 6 (Top Far Left) -> Below Right (x: 7-31%)
+    { className: 'top-full left-0 mt-2', initialY: -10 },
+    { className: 'left-full top-0 ml-4', initialY: 0 },
+    { className: 'top-full left-0 mt-2', initialY: -10 },
+    { className: 'right-full top-0 mr-4', initialY: 0 },
+    { className: 'top-full left-0 mt-2', initialY: -10 },
+    { className: 'left-full top-0 ml-4', initialY: 0 }
   ]
 
   return (
-    <div className="relative w-full py-14 md:py-16 px-4 overflow-hidden bg-white">
+    <div className="relative w-full pt-28 pb-14 md:pt-32 md:pb-16 px-4 overflow-hidden bg-white">
       <div className="max-w-7xl mx-auto relative h-[840px] lg:h-[880px] hidden md:block">
         <div className="absolute inset-0 flex items-center justify-center">
           <svg viewBox="0 0 1000 900" className="w-full h-full drop-shadow-[0_16px_36px_rgba(0,0,0,0.14)]" preserveAspectRatio="none">
