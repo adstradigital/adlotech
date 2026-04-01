@@ -8,19 +8,19 @@ const WhatsAppFloat = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const whatsappNumbers = [
-    { label: '956 756 8185', number: '919567568185' },
-    { label: '9744 77 9574', number: '919744779574' }
+    { label: 'Support 1', number: '919567568185' },
+    { label: 'Support 2', number: '919744779574' }
   ]
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-4">
+    <div className="fixed bottom-6 left-6 z-[60] flex flex-col items-start gap-4">
       {/* Popover Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            initial={{ opacity: 0, scale: 0.8, x: -20, y: 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, x: -10, y: 10 }}
             className="mb-2 w-72 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl"
           >
             {/* Header */}
@@ -42,15 +42,15 @@ const WhatsAppFloat = () => {
                   initial={{ x: 20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 + idx * 0.1 }}
-                  className="group flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-all hover:bg-emerald-50 hover:border-emerald-200"
+                  className="group flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-100 transition-all hover:bg-emerald-50 hover:border-emerald-200 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-emerald-500 group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
                       <FaWhatsapp className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">WhatsApp</p>
-                      <p className="text-sm font-black text-slate-800">{item.label}</p>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">WhatsApp</p>
+                      <p className="text-sm font-black text-slate-800 leading-none">{item.label}</p>
                     </div>
                   </div>
                   <div className="text-slate-300 group-hover:text-emerald-500 transform transition-transform group-hover:translate-x-1">
@@ -75,13 +75,13 @@ const WhatsAppFloat = () => {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={`group relative flex items-center gap-3 rounded-full h-14 pl-4 pr-6 transition-all duration-500 shadow-xl ${
+        className={`group relative flex items-center justify-center rounded-full h-16 w-16 transition-all duration-500 shadow-2xl overflow-hidden ${
           isOpen 
-            ? 'bg-slate-900 text-white w-auto shadow-slate-900/30' 
-            : 'bg-[#00c55f] text-white w-auto shadow-[#00c55f]/20'
+            ? 'bg-slate-900 text-white' 
+            : 'bg-[#00c55f] text-white'
         }`}
       >
-        <div className="relative flex items-center justify-center h-8 w-8">
+        <div className="relative flex items-center justify-center h-10 w-10">
           <AnimatePresence mode="wait">
             {isOpen ? (
               <motion.div
@@ -104,9 +104,6 @@ const WhatsAppFloat = () => {
             )}
           </AnimatePresence>
         </div>
-        <span className="text-sm font-black tracking-tight whitespace-nowrap">
-          {isOpen ? 'Close' : 'Chat Now!'}
-        </span>
       </motion.button>
     </div>
   )
