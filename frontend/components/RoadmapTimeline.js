@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const TeardropPin = ({ color, isHovered }) => (
   <motion.div
-    animate={{ 
+    animate={{
       y: isHovered ? -12 : 0,
       scale: isHovered ? 1.05 : 1
     }}
@@ -12,9 +12,9 @@ const TeardropPin = ({ color, isHovered }) => (
     className="relative flex flex-col items-center cursor-pointer"
   >
     <svg width="58" height="79" viewBox="0 0 100 135" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-2xl">
-      <path 
-        d="M50 135C50 135 100 88 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 88 50 135 50 135Z" 
-        fill={color} 
+      <path
+        d="M50 135C50 135 100 88 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 88 50 135 50 135Z"
+        fill={color}
       />
       <circle cx="50" cy="46" r="28" fill="white" />
     </svg>
@@ -28,7 +28,7 @@ const RoadmapTimeline = ({ steps }) => {
   // PRECISION COORDINATES for the 6-pin "Masterpiece" SVG
   // Equidistant coordinates calculated along the roadmap dashPath curve
   const desktopPositions = [
-    { x: '7.4%',  y: '-3.4%' }, // Month 1 (was 6)
+    { x: '7.4%', y: '-3.4%' }, // Month 1 (was 6)
     { x: '39.0%', y: '2.7%' },  // Month 2 (was 5)
     { x: '68.7%', y: '14.8%' }, // Month 3 (was 4)
     { x: '49.0%', y: '35.9%' }, // Month 4 (was 3)
@@ -51,77 +51,77 @@ const RoadmapTimeline = ({ steps }) => {
   ]
 
   return (
-    <div className="relative w-full pt-28 pb-14 md:pt-32 md:pb-16 px-4 overflow-hidden bg-white">
+    <div className="relative w-full pt-14 md:pt-16 pb-28 md:pb-32 px-4 overflow-visible bg-white">
       <div className="max-w-7xl mx-auto relative h-[840px] lg:h-[880px] hidden md:block">
         <div className="absolute inset-0 flex items-center justify-center">
           <svg viewBox="0 0 1000 900" className="w-full h-full drop-shadow-[0_16px_36px_rgba(0,0,0,0.14)]" preserveAspectRatio="none">
-             <defs>
-                <linearGradient id="roadSurfGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                   <stop offset="0%" stopColor="#9ba0a7" />
-                   <stop offset="100%" stopColor="#7f858d" />
-                </linearGradient>
-             </defs>
+            <defs>
+              <linearGradient id="roadSurfGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#9ba0a7" />
+                <stop offset="100%" stopColor="#7f858d" />
+              </linearGradient>
+            </defs>
 
-             {/* Road shadow */}
-             <motion.path
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                d={roadSurface}
-                transform="translate(6, 10)"
-                fill="#111827"
-                className="opacity-25"
-             />
+            {/* Road shadow */}
+            <motion.path
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              d={roadSurface}
+              transform="translate(6, 10)"
+              fill="#111827"
+              className="opacity-25"
+            />
 
-             {/* Main road surface */}
-             <motion.path
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 2.5, ease: "easeInOut" }}
-                d={roadSurface}
-                fill="url(#roadSurfGrad)"
-             />
+            {/* Main road surface */}
+            <motion.path
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 2.5, ease: "easeInOut" }}
+              d={roadSurface}
+              fill="url(#roadSurfGrad)"
+            />
 
-             {/* Side edge lines */}
-             <motion.path
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 2.7, ease: "easeInOut" }}
-                d={leftEdgeP}
-                fill="none"
-                stroke="#f3f4f6"
-                strokeWidth="5"
-                strokeDasharray="20 12"
-                strokeLinecap="round"
-                style={{ strokeDasharray: "20, 12", strokeDashoffset: "var(--path-length)" }}
-                className="opacity-85"
-             />
-             <motion.path
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 2.7, ease: "easeInOut" }}
-                d={rightEdgeP}
-                fill="none"
-                stroke="#f3f4f6"
-                strokeWidth="5"
-                strokeDasharray="20 12"
-                strokeLinecap="round"
-                style={{ strokeDasharray: "20, 12" }}
-                className="opacity-85"
-             />
+            {/* Side edge lines */}
+            <motion.path
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 2.7, ease: "easeInOut" }}
+              d={leftEdgeP}
+              fill="none"
+              stroke="#f3f4f6"
+              strokeWidth="5"
+              strokeDasharray="20 12"
+              strokeLinecap="round"
+              style={{ strokeDasharray: "20, 12", strokeDashoffset: "var(--path-length)" }}
+              className="opacity-85"
+            />
+            <motion.path
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              transition={{ duration: 2.7, ease: "easeInOut" }}
+              d={rightEdgeP}
+              fill="none"
+              stroke="#f3f4f6"
+              strokeWidth="5"
+              strokeDasharray="20 12"
+              strokeLinecap="round"
+              style={{ strokeDasharray: "20, 12" }}
+              className="opacity-85"
+            />
 
-             {/* CENTER DASHED LINE */}
-             <motion.path
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.75 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                d={dashPath}
-                fill="none"
-                stroke="white"
-                strokeWidth="4"
-                strokeDasharray="30 20"
-                strokeLinecap="round"
-                className="opacity-75"
-             />
+            {/* CENTER DASHED LINE */}
+            <motion.path
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.75 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              d={dashPath}
+              fill="none"
+              stroke="white"
+              strokeWidth="4"
+              strokeDasharray="30 20"
+              strokeLinecap="round"
+              className="opacity-75"
+            />
           </svg>
         </div>
 
@@ -130,17 +130,17 @@ const RoadmapTimeline = ({ steps }) => {
           const pos = desktopPositions[index]
           const isHovered = hoveredIdx === index
           const cardPlacement = desktopCardPlacement[index] ?? desktopCardPlacement[1]
-          
+
           return (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`absolute flex flex-col items-center pointer-events-auto ${isHovered ? 'z-50' : 'z-20'}`}
               style={{ left: pos.x, top: pos.y }}
               onMouseEnter={() => setHoveredIdx(index)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
               {/* Persistent Month & Subject Heading */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -164,22 +164,22 @@ const RoadmapTimeline = ({ steps }) => {
                     className={`absolute ${cardPlacement.className} z-30 w-[240px] bg-white/95 backdrop-blur-md rounded-[2rem] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-white/50`}
                   >
                     <div className="flex items-center gap-3 mb-4">
-                       <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-lg" style={{ backgroundColor: step.color }}>
-                          <step.icon size={16} />
-                       </div>
-                       <div className="flex flex-col">
-                         <span className="text-[8px] font-black tracking-[0.2em] uppercase text-gray-400 leading-none mb-1">{step.month}</span>
-                         <div className="h-1 w-4 rounded-full" style={{ backgroundColor: step.color }} />
-                       </div>
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-lg" style={{ backgroundColor: step.color }}>
+                        <step.icon size={16} />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-black tracking-[0.2em] uppercase text-gray-400 leading-none mb-1">{step.month}</span>
+                        <div className="h-1 w-4 rounded-full" style={{ backgroundColor: step.color }} />
+                      </div>
                     </div>
                     <h4 className="text-lg font-black text-gray-900 mb-2 leading-tight tracking-tight">{step.title}</h4>
                     <p className="text-[11px] text-gray-500 mb-4 leading-relaxed font-medium">{step.description}</p>
                     <div className="flex flex-wrap gap-1.5">
-                       {step.skills.map((skill, sIdx) => (
-                         <span key={sIdx} className="text-[8px] font-black uppercase tracking-wider text-gray-500 bg-gray-50 px-2 py-1 rounded-full border border-gray-100 shadow-sm">
-                           {skill}
-                         </span>
-                       ))}
+                      {step.skills.map((skill, sIdx) => (
+                        <span key={sIdx} className="text-[8px] font-black uppercase tracking-wider text-gray-500 bg-gray-50 px-2 py-1 rounded-full border border-gray-100 shadow-sm">
+                          {skill}
+                        </span>
+                      ))}
                     </div>
                   </motion.div>
                 )}
@@ -192,14 +192,14 @@ const RoadmapTimeline = ({ steps }) => {
       {/* Mobile view */}
       <div className="md:hidden space-y-8">
         {steps.map((step, index) => (
-          <motion.div 
+          <motion.div
             key={index}
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             className="flex gap-6 items-start bg-gray-50/50 p-6 rounded-[2rem] border border-gray-100"
           >
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg`} 
-                 style={{ backgroundColor: step.color }}>
+            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-lg`}
+              style={{ backgroundColor: step.color }}>
               <step.icon size={24} />
             </div>
             <div>

@@ -52,13 +52,13 @@ const Footer = () => {
             <ul className="space-y-4">
               <li>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Near+English+Church,+Nadakkavu,+Kozhikode,+Kerala,+India" 
+                  href="https://www.google.com/maps/search/?api=1&query=Husna+Complex%2C+65%2F2244%2C+Kannur+Rd%2C+near+English+Church%2C+opp.+SL+Towers%2C+West+Nadakkave%2C+West%2C+Nadakkave%2C+Kozhikode%2C+Kerala+673011" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="grid grid-cols-[16px_1fr] items-start gap-3 text-sm text-gray-600 group hover:text-blue-600 transition-colors"
                 >
                   <FiMapPin className="mt-1 text-blue-500 w-4 h-4 group-hover:scale-125 transition-transform" />
-                  <span className="leading-relaxed text-left">Near English Church, Nadakkavu, Kozhikode,<br/>Kerala, India</span>
+                  <span className="leading-relaxed text-left">Husna Complex, 65/2244, Kannur Rd, near<br/>English Church, opp. SL Towers, West Nadakkave,<br/>West, Nadakkave, Kozhikode, Kerala 673011</span>
                 </a>
               </li>
               <li>
@@ -72,11 +72,11 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="tel:+911234567890" 
+                  href="tel:+919567568185" 
                   className="grid grid-cols-[16px_1fr] items-start gap-3 text-sm text-gray-600 group hover:text-blue-600 transition-colors"
                 >
                   <FiPhone className="mt-1 text-blue-500 w-4 h-4 group-hover:scale-125 transition-transform" />
-                  <span>+91 1234567890</span>
+                  <span>+91 956 756 8185</span>
                 </a>
               </li>
             </ul>
@@ -119,13 +119,31 @@ const Footer = () => {
           </p>
 
           <div className="flex items-center space-x-3">
-            <a href="#" aria-label="Instagram" className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:text-white hover:border-transparent hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-600 transition-all duration-300">
+            <a
+              href="https://www.instagram.com/adlotech.training/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:text-white hover:border-transparent hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-600 transition-all duration-300"
+            >
               <FiInstagram className="w-4 h-4" />
             </a>
-            <a href="#" aria-label="LinkedIn" className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:text-white hover:border-transparent hover:bg-[#0077b5] transition-all duration-300">
+            <a
+              href="https://www.linkedin.com/company/adlotech-training"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:text-white hover:border-transparent hover:bg-[#0077b5] transition-all duration-300"
+            >
               <FiLinkedin className="w-4 h-4" />
             </a>
-            <a href="#" aria-label="Facebook" className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:text-white hover:border-transparent hover:bg-[#1877f2] transition-all duration-300">
+            <a
+              href="https://www.facebook.com/adlotechtraining"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:text-white hover:border-transparent hover:bg-[#1877f2] transition-all duration-300"
+            >
               <FiFacebook className="w-4 h-4" />
             </a>
           </div>

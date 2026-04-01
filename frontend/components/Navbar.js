@@ -1,8 +1,8 @@
 
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowDown, FiBookOpen, FiBriefcase, FiTrendingUp, FiGlobe } from 'react-icons/fi'
 import BrandLogo from './BrandLogo'
@@ -17,8 +17,7 @@ const menuContent = {
   '/about': {
     title: 'About Us',
     description: 'ADLOTECH is a proud subsidiary of Adstra Digital, created with a singular mission: to deliver specialized, future-ready programming education. We are currently under the ISO–IAF certification process, expected to be received within a month, ensuring that our training standards meet the highest levels of global quality and credibility.',
-    links: [],
-    image: '/images/contact-bg.jpg'
+    links: []
   },
   '/services': {
     title: 'What do we do',
@@ -43,8 +42,7 @@ const menuContent = {
         desc: 'ISO–IAF certification ensures quality, trust, and recognition.',
         icon: FiGlobe 
       }
-    ],
-    image: '/images/services-bg.jpg'
+    ]
   },
   '/contact': {
     title: 'Get in Touch',
@@ -53,8 +51,7 @@ const menuContent = {
       { label: 'info@adlotech.com', href: 'mailto:info@adlotech.com' },
       { label: 'Support Center', href: '#' },
       { label: 'Visit our Campus', href: '#' }
-    ],
-    image: '/images/about-bg.png'
+    ]
   }
 }
 
@@ -71,7 +68,36 @@ const Navbar = () => {
   const [isSendingContact, setIsSendingContact] = useState(false)
   const [contactStatus, setContactStatus] = useState(null) // null | success | error
   const [contactError, setContactError] = useState('')
-  const pathname = usePathname()
+
+  const openMenu = useCallback((section = '/about') => {
+    setHoveredLink(section)
+    setIsMenuOpen(true)
+
+    if (typeof window === 'undefined') return
+
+    if (window.history.state?.menuOverlay) {
+      window.history.replaceState(
+        { ...(window.history.state || {}), menuOverlay: true, menuSection: section },
+        '',
+        window.location.href
+      )
+      return
+    }
+
+    window.history.pushState(
+      { ...(window.history.state || {}), menuOverlay: true, menuSection: section },
+      '',
+      window.location.href
+    )
+  }, [])
+
+  const closeMenu = useCallback(() => {
+    if (typeof window !== 'undefined' && window.history.state?.menuOverlay) {
+      window.history.back()
+      return
+    }
+    setIsMenuOpen(false)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,12 +109,24 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleOpenContactMenu = () => {
-      setHoveredLink('/contact')
-      setIsMenuOpen(true)
+      openMenu('/contact')
     }
 
     window.addEventListener('open-contact-menu', handleOpenContactMenu)
     return () => window.removeEventListener('open-contact-menu', handleOpenContactMenu)
+  }, [openMenu])
+
+  useEffect(() => {
+    const handlePopState = (event) => {
+      const menuOverlayOpen = Boolean(event.state?.menuOverlay)
+      setIsMenuOpen(menuOverlayOpen)
+      if (menuOverlayOpen && event.state?.menuSection) {
+        setHoveredLink(event.state.menuSection)
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
   // Lock body scroll when menu is open
@@ -180,7 +218,7 @@ const Navbar = () => {
 
               {/* Menu Button */}
               <button
-                onClick={() => setIsMenuOpen(true)}
+                onClick={() => openMenu('/about')}
                 className="group flex items-center gap-3 transition-colors duration-300 font-bold tracking-widest text-xs text-gray-900 hover:text-blue-600"
               >
                 <div className="flex flex-col gap-[4px] justify-center items-end">
@@ -202,41 +240,47 @@ const Navbar = () => {
             animate={{ opacity: 1, clipPath: 'circle(150% at 100% 0%)' }}
             exit={{ opacity: 0, clipPath: 'circle(0% at 100% 0%)' }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 min-h-screen bg-[#111111] z-50 flex flex-col justify-center overflow-hidden"
+            className="fixed inset-0 min-h-screen z-50 flex flex-col justify-center overflow-hidden"
           >
-            {/* Full Screen Background Image */}
+            {/* Full-page background image — changes per section */}
             <AnimatePresence mode="wait">
-              {menuContent[hoveredLink]?.image && (
-                <motion.div
-                  key={`bg-${hoveredLink}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.5 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="absolute inset-0 z-0 pointer-events-none"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/80 z-10" />
-                  <img 
-                    src={menuContent[hoveredLink].image} 
-                    alt="Background" 
-                    className="w-full h-full object-cover filter brightness-50"
-                  />
-                </motion.div>
-              )}
+              <motion.div
+                key={hoveredLink + '-fullbg'}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                className="absolute inset-0 z-0"
+              >
+                <Image
+                  src={
+                    hoveredLink === '/about'
+                      ? '/images/about.png'
+                      : hoveredLink === '/services'
+                      ? '/images/services.png'
+                      : '/images/contact.png'
+                  }
+                  alt="Menu background"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+                {/* Gradient: transparent at top (shows faces) → dark at bottom (readable content) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/15" />
+              </motion.div>
             </AnimatePresence>
-
             {/* Overlay Header (Close Button) */}
             <div className="absolute top-0 left-0 right-0 w-full px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center z-20">
-              <Link 
-                href="/" 
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                type="button"
+                onClick={closeMenu}
                 className="inline-flex"
-               >
+              >
                 <BrandLogo className="max-w-[75px] sm:max-w-[85px]" />
-              </Link>
-              <Link
-                href="/"
-                onClick={() => setIsMenuOpen(false)}
+              </button>
+              <button
+                type="button"
+                onClick={closeMenu}
                 className="group flex items-center gap-3 text-white transition-colors duration-300 font-bold tracking-widest text-sm hover:text-gray-300"
               >
                 Close
@@ -245,11 +289,11 @@ const Navbar = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </span>
-              </Link>
+              </button>
             </div>
 
             {/* Menu Content Container */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 mt-16 md:mt-0 flex flex-col md:flex-row items-center justify-between h-full py-10 md:py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 flex flex-col md:flex-row items-end justify-between h-full pb-10 md:pb-14 pt-24">
               
               {/* Left Side: Navigation Links */}
               <div className="w-full md:w-1/2">
@@ -281,7 +325,7 @@ const Navbar = () => {
               </div>
 
               {/* Right Side: Dynamic Content Panel */}
-              <div className="hidden md:flex w-full md:w-1/2 flex-col justify-center pl-16 border-l border-white/10 h-full relative py-20">
+              <div className="hidden md:flex w-full md:w-1/2 flex-col justify-end pl-14 border-l border-white/10 relative pb-1">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={hoveredLink}
@@ -291,12 +335,12 @@ const Navbar = () => {
                     transition={{ duration: 0.3 }}
                     className="max-w-xl relative z-10"
                   >
-                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 tracking-tight leading-tight filter drop-shadow-md">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight leading-tight filter drop-shadow-md">
                       {menuContent[hoveredLink]?.title}
                     </h3>
 
                     {hoveredLink === '/contact' ? (
-                      <div className="flex flex-col gap-5 w-full max-w-sm">
+                      <div className="flex flex-col gap-3 w-full max-w-sm">
                         <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">
                           <input
                             type="text"
@@ -374,24 +418,24 @@ const Navbar = () => {
                         </div>
                       </div>
                     ) : hoveredLink === '/services' ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
+                      <div className="grid grid-cols-2 gap-3 w-full">
                         {menuContent['/services'].items.map((item, idx) => (
                           <motion.div
                             key={idx}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 + idx * 0.1 }}
-                            className="group/card relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-blue-500/50 transition-all duration-300 flex flex-col gap-3"
+                            transition={{ delay: 0.05 + idx * 0.07 }}
+                            className="group/card relative p-4 rounded-xl bg-white/8 border border-white/10 hover:bg-white/12 hover:border-blue-500/50 transition-all duration-300 flex flex-col gap-2"
                           >
-                            <div className="flex items-center gap-4">
-                              <div className="p-3 rounded-xl bg-blue-500/10 text-blue-400 group-hover/card:bg-blue-500 group-hover/card:text-white transition-all duration-300">
-                                <item.icon className="w-6 h-6" />
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover/card:bg-blue-500 group-hover/card:text-white transition-all duration-300">
+                                <item.icon className="w-4 h-4" />
                               </div>
-                              <h4 className="text-lg font-bold text-white group-hover/card:text-blue-400 transition-colors">
+                              <h4 className="text-sm font-bold text-white group-hover/card:text-blue-400 transition-colors leading-tight">
                                 {item.title}
                               </h4>
                             </div>
-                            <p className="text-sm text-gray-400 leading-relaxed">
+                            <p className="text-xs text-gray-400 leading-relaxed">
                               {item.desc}
                             </p>
                           </motion.div>
@@ -399,13 +443,13 @@ const Navbar = () => {
                       </div>
                     ) : (
                       <>
-                        <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-8 whitespace-pre-line">
+                        <p className="text-gray-300 leading-relaxed text-sm mb-4 whitespace-pre-line">
                           {menuContent[hoveredLink]?.description}
                         </p>
-                        <ul className="space-y-4">
+                        <ul className="space-y-2">
                           {menuContent[hoveredLink]?.links?.map((sublink, idx) => (
                             <li key={idx}>
-                              <Link href={sublink.href} onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white flex items-center gap-2 group transition-colors text-lg font-medium">
+                              <Link href={sublink.href} onClick={closeMenu} className="text-gray-300 hover:text-white flex items-center gap-2 group transition-colors text-base font-medium">
                                 <span className="w-4 h-[2px] bg-blue-500 mr-2 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300"></span>
                                 {sublink.label}
                               </Link>
