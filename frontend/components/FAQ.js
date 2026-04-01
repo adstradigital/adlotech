@@ -60,31 +60,26 @@ export default function FAQ() {
 
   return (
     <section className="bg-white py-16 md:py-20">
-      {/* Outer container — matches the rest of the site width */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Heading */}
         <h2 className="text-[1.75rem] md:text-[2.25rem] font-bold text-gray-900 mb-8 tracking-tight">
           Frequently asked questions
         </h2>
 
-        {/* ── Card box pulled in from both edges ── */}
-        <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm bg-white">
-
-          {/* Accordion rows */}
+        {/* Individual FAQ Cards Stack */}
+        <div className="space-y-4 max-w-4xl">
           <AnimatePresence initial={false}>
             {visibleFaqs.map((faq, idx) => {
               const isOpen = openId === faq.id
-              const isLast = idx === visibleFaqs.length - 1
 
               return (
                 <motion.div
                   key={faq.id}
-                  initial={{ opacity: 0, y: -6 }}
+                  initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.2 }}
-                  className={`bg-white ${!isLast ? 'border-b border-gray-200' : ''}`}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-gray-100 rounded-xl border border-gray-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden"
                 >
                   {/* Question button */}
                   <button
@@ -92,28 +87,36 @@ export default function FAQ() {
                     onClick={() => toggle(faq.id)}
                     aria-expanded={isOpen}
                     aria-controls={`faq-panel-${faq.id}`}
-                    className="w-full flex items-center gap-4 px-6 py-5 text-left group transition-colors duration-200 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset"
+                    className="w-full flex items-center justify-between gap-6 px-6 py-5 text-left group transition-all duration-300 hover:bg-gray-100/50 outline-none"
                   >
-                    {/* Rotating chevron */}
-                    <motion.span
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.25, ease: 'easeInOut' }}
-                      className="flex-shrink-0 flex items-center justify-center w-6 h-6 text-gray-500 group-hover:text-blue-600"
-                    >
-                      <FiChevronDown className="w-5 h-5" />
-                    </motion.span>
-
-                    {/* Question text */}
+                    {/* Question text with index */}
                     <span
-                      className={`text-sm md:text-base font-semibold leading-snug transition-colors duration-200 ${
-                        isOpen ? 'text-blue-600' : 'text-gray-800 group-hover:text-blue-600'
+                      className={`text-sm md:text-[0.9375rem] font-bold leading-snug transition-colors duration-300 ${
+                        isOpen ? 'text-red-600' : 'text-gray-700'
                       }`}
                     >
+                      <span className="text-gray-400 mr-2">Q{idx + 1}:</span>
                       {faq.question}
                     </span>
+
+                    {/* Red circular toggle button on far right */}
+                    <div
+                      className={`flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full border-2 border-red-100 transition-all duration-500 ${
+                        isOpen ? 'bg-red-600 border-red-600' : 'bg-white group-hover:border-red-400'
+                      }`}
+                    >
+                      <motion.div
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.4, ease: "backOut" }}
+                      >
+                        <FiChevronDown className={`w-3.5 h-3.5 transition-colors duration-300 ${
+                          isOpen ? 'text-white' : 'text-red-500 group-hover:text-red-600'
+                        }`} />
+                      </motion.div>
+                    </div>
                   </button>
 
-                  {/* Answer panel */}
+                  {/* Answer panel with adjusted layout */}
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
@@ -124,12 +127,14 @@ export default function FAQ() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
                         className="overflow-hidden"
                       >
-                        <p className="px-6 pb-6 pl-16 text-sm md:text-[0.9375rem] text-gray-600 leading-relaxed">
-                          {faq.answer}
-                        </p>
+                        <div className="px-6 pb-6 pt-1 border-t border-gray-100/50">
+                          <p className="pl-10 md:pl-[3.25rem] text-[0.875rem] md:text-[0.9375rem] text-gray-500 font-medium leading-relaxed">
+                            {faq.answer}
+                          </p>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -137,60 +142,48 @@ export default function FAQ() {
               )
             })}
           </AnimatePresence>
-
-          {/* ── Show all / Show less toggle row ── */}
-          <div className="border-t border-gray-200 flex items-center justify-center py-4">
-            <button
-              onClick={() => {
-                setShowAll((prev) => {
-                  // collapse any open item when hiding
-                  if (prev) setOpenId(null)
-                  return !prev
-                })
-              }}
-              className={`flex items-center gap-2 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-full ${
-                showAll
-                  ? 'text-sm font-semibold text-gray-700 hover:text-blue-600'
-                  : 'text-sm font-semibold text-gray-700 border border-gray-300 hover:border-blue-500 hover:text-blue-600 px-5 py-2 rounded-full'
-              }`}
-            >
-              {showAll ? (
-                <>
-                  Show less
-                  <motion.span
-                    animate={{ rotate: 180 }}
-                    transition={{ duration: 0.25 }}
-                    className="inline-flex"
-                  >
-                    <FiChevronDown className="w-4 h-4" />
-                  </motion.span>
-                </>
-              ) : (
-                <>
-                  Show all {faqs.length} frequently asked questions
-                  <motion.span
-                    animate={{ rotate: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="inline-flex"
-                  >
-                    <FiChevronDown className="w-4 h-4" />
-                  </motion.span>
-                </>
-              )}
-            </button>
-          </div>
         </div>
 
-        {/* CTA line below card */}
-        <p className="mt-8 text-sm text-gray-500 text-center">
-          Still have questions?{' '}
-          <a
-            href="/contact"
-            className="text-blue-600 font-semibold hover:underline transition-colors"
+        {/* Show More/Less Button Container */}
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={() => {
+              setShowAll((prev) => {
+                if (prev) setOpenId(null)
+                return !prev
+              })
+            }}
+            className={`flex items-center gap-2 transition-all duration-200 focus:outline-none rounded-full ${
+              showAll
+                ? 'text-sm font-semibold text-gray-500 hover:text-red-600'
+                : 'text-sm font-semibold text-gray-700 border border-gray-200 hover:border-red-500 hover:text-red-600 px-6 py-2.5 rounded-full shadow-sm bg-gray-100'
+            }`}
           >
+            {showAll ? (
+              <>
+                Show less
+                <motion.span animate={{ rotate: 180 }} transition={{ duration: 0.25 }}>
+                  <FiChevronDown className="w-4 h-4" />
+                </motion.span>
+              </>
+            ) : (
+              <>
+                Show all frequently asked questions
+                <motion.span animate={{ rotate: 0 }} transition={{ duration: 0.25 }}>
+                  <FiChevronDown className="w-4 h-4" />
+                </motion.span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* CTA line below cards */}
+        <p className="mt-12 text-sm text-gray-400 text-center">
+          Still have questions?{' '}
+          <a href="/contact" className="text-red-600 font-semibold hover:underline transition-colors">
             Contact us
           </a>{' '}
-          and we&apos;ll be happy to help.
+          and we'll be happy to help.
         </p>
       </div>
     </section>

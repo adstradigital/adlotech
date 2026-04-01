@@ -37,9 +37,30 @@ const Footer = () => {
               <span className="w-8 h-[1px] bg-gray-300 ml-3"></span>
             </h4>
             <ul className="space-y-4">
-              <li><Link href="/about" className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-all hover:translate-x-1 inline-block">About</Link></li>
-              <li><Link href="/services" className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-all hover:translate-x-1 inline-block">Services</Link></li>
-              <li><Link href="/contact" className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-all hover:translate-x-1 inline-block">Contact</Link></li>
+              <li>
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-menu', { detail: '/about' }))}
+                  className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-all hover:translate-x-1 inline-block"
+                >
+                  About
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-menu', { detail: '/services' }))}
+                  className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-all hover:translate-x-1 inline-block"
+                >
+                  Services
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-menu', { detail: '/contact' }))}
+                  className="text-gray-600 hover:text-blue-600 text-sm font-medium transition-all hover:translate-x-1 inline-block"
+                >
+                  Contact
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -115,7 +136,7 @@ const Footer = () => {
         {/* Footer Bottom Bar - Thin & Elegant */}
         <div className="pt-4 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 relative">
           <p className="text-[10px] font-black tracking-widest text-gray-500 ">
-            Copyright © 2024 <span className="text-gray-900 font-black">ADLOTECH</span>. All rights Served.
+            Copyright Â© 2024 <span className="text-gray-900 font-black">ADLOTECH</span>. All rights Served.
           </p>
 
           <div className="flex items-center space-x-3">

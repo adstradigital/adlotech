@@ -1,4 +1,3 @@
-
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
@@ -10,7 +9,7 @@ import BrandLogo from './BrandLogo'
 const navLinks = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/contact', label: 'Why Us' },
 ]
 
 const menuContent = {
@@ -45,7 +44,7 @@ const menuContent = {
     ]
   },
   '/contact': {
-    title: 'Get in Touch',
+    title: 'Why Choose Adlotech?',
     description: 'Ready to take the next step? Our admissions team is here to answer all your questions and help you start your journey.',
     links: [
       { label: 'info@adlotech.com', href: 'mailto:info@adlotech.com' },
@@ -108,12 +107,19 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    const handleOpenContactMenu = () => {
-      openMenu('/contact')
+    const handleOpenMenu = (e) => {
+      const section = e.detail || '/about'
+      openMenu(section)
     }
 
-    window.addEventListener('open-contact-menu', handleOpenContactMenu)
-    return () => window.removeEventListener('open-contact-menu', handleOpenContactMenu)
+    window.addEventListener('open-menu', handleOpenMenu)
+    // Backward compatibility for existing triggers
+    window.addEventListener('open-contact-menu', () => openMenu('/contact'))
+    
+    return () => {
+      window.removeEventListener('open-menu', handleOpenMenu)
+      window.removeEventListener('open-contact-menu', () => openMenu('/contact'))
+    }
   }, [openMenu])
 
   useEffect(() => {
@@ -418,28 +424,39 @@ const Navbar = () => {
                         </div>
                       </div>
                     ) : hoveredLink === '/services' ? (
-                      <div className="grid grid-cols-2 gap-3 w-full">
-                        {menuContent['/services'].items.map((item, idx) => (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.05 + idx * 0.07 }}
-                            className="group/card relative p-4 rounded-xl bg-white/8 border border-white/10 hover:bg-white/12 hover:border-blue-500/50 transition-all duration-300 flex flex-col gap-2"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover/card:bg-blue-500 group-hover/card:text-white transition-all duration-300">
-                                <item.icon className="w-4 h-4" />
+                      <div className="w-full">
+                        <div className="grid grid-cols-2 gap-3 w-full">
+                          {menuContent['/services'].items.map((item, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, y: 15 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.05 + idx * 0.07 }}
+                              className="group/card relative p-4 rounded-xl bg-white/8 border border-white/10 hover:bg-white/12 hover:border-blue-500/50 transition-all duration-300 flex flex-col gap-2"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 group-hover/card:bg-blue-500 group-hover/card:text-white transition-all duration-300">
+                                  <item.icon className="w-4 h-4" />
+                                </div>
+                                <h4 className="text-sm font-bold text-white group-hover/card:text-blue-400 transition-colors leading-tight">
+                                  {item.title}
+                                </h4>
                               </div>
-                              <h4 className="text-sm font-bold text-white group-hover/card:text-blue-400 transition-colors leading-tight">
-                                {item.title}
-                              </h4>
-                            </div>
-                            <p className="text-xs text-gray-400 leading-relaxed">
-                              {item.desc}
-                            </p>
-                          </motion.div>
-                        ))}
+                              <p className="text-xs text-gray-400 leading-relaxed">
+                                {item.desc}
+                              </p>
+                            </motion.div>
+                          ))}
+                        </div>
+
+                        <Link
+                          href="/why-choose-us"
+                          onClick={closeMenu}
+                          className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5 hover:from-amber-300 hover:to-orange-400"
+                        >
+                          Why Choose Us
+                          <span aria-hidden="true">→</span>
+                        </Link>
                       </div>
                     ) : (
                       <>

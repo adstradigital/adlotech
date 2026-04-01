@@ -295,6 +295,15 @@ export default function Home() {
               <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                 A visually guided masterclass taking you from foundation to full-stack mastery.
               </p>
+              <div className="mt-6">
+                <Link
+                  href="/why-choose-us"
+                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-amber-300 hover:to-orange-400"
+                >
+                  Why Choose Us
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
           </AnimatedSection>
 

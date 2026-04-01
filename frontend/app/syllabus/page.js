@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiChevronLeft, FiChevronRight, FiClock, FiCreditCard, FiAward, FiCheckCircle } from 'react-icons/fi'
+import { FiChevronLeft, FiChevronRight, FiClock, FiCreditCard, FiAward, FiCheckCircle, FiMail, FiPhone, FiUser } from 'react-icons/fi'
 
 const placementReviews = [
   {
@@ -184,8 +185,13 @@ function PlacementsCarousel() {
                 className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm flex flex-col items-center text-center relative hover:shadow-md transition-shadow"
               >
                 {/* Top Profile Image */}
-                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg -mt-16 mb-6">
-                  <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
+                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg -mt-16 mb-6 relative">
+                  <Image 
+                    src={review.image} 
+                    alt={review.name} 
+                    fill
+                    className="object-cover" 
+                  />
                 </div>
 
                 {/* Review Title */}
@@ -300,90 +306,116 @@ function CourseDetails({ section }) {
 function RequestCallbackForm() {
   return (
     <form
-      className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm"
+      className="w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg"
       action="mailto:info.adlotech@gmail.com"
       method="post"
       encType="text/plain"
     >
-      <div className="max-w-2xl space-y-2">
-        <h3 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight">
-          Request a callback.
-        </h3>
-        <p className="text-sm md:text-base text-gray-500 font-medium">
-          We will guide you toward the right path for career success.
-        </p>
+      <div className="relative bg-amber-400 px-6 py-4 text-center text-white">
+        <h3 className="text-lg font-bold">Course Enquiry Form</h3>
+        <button
+          type="button"
+          aria-label="Close form"
+          className="absolute right-4 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-900 text-white"
+        >
+          ?
+        </button>
       </div>
 
-      <div className="mt-6 space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full name"
-          required
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+      <div className="space-y-5 px-6 py-6">
+        <div className="h-px w-full bg-amber-100" />
 
-        <div className="flex w-full rounded-xl border border-gray-200 bg-white overflow-hidden">
-          <span className="px-4 py-3 text-xs font-black uppercase tracking-widest text-gray-500 bg-gray-50 border-r border-gray-200">
-            IN +91
-          </span>
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-semibold text-amber-600">
+            <FiUser className="text-base" />
+            Full Name
+            <span className="text-red-500">*</span>
+          </label>
           <input
-            type="tel"
-            name="phone"
-            placeholder="Phone number"
+            type="text"
+            name="name"
+            placeholder="Enter name"
             required
-            className="flex-1 px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none"
+            className="w-full rounded-xl border border-dashed border-amber-300 bg-white px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-amber-500"
           />
         </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email address"
-          required
-          className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <div className="relative">
-          <select
-            name="qualification"
-            defaultValue=""
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-semibold text-amber-600">
+            <FiPhone className="text-base" />
+            Phone Number
+            <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Enter phone number"
             required
-            className="w-full appearance-none rounded-xl border border-gray-200 bg-white px-4 py-3 pr-10 text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="" disabled>
-              Select qualification
-            </option>
-            <option value="12">12</option>
-            <option value="Degree">Degree</option>
-            <option value="Freshers">Freshers</option>
-            <option value="Diploma">Diploma</option>
-          </select>
-          <svg
-            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
+            className="w-full rounded-xl border border-dashed border-amber-300 bg-white px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-amber-500"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-semibold text-amber-600">
+            <FiMail className="text-base" />
+            Email
+            <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+            className="w-full rounded-xl border border-dashed border-amber-300 bg-white px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-amber-500"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm font-semibold text-amber-600">
+            <FiAward className="text-base" />
+            Highest Qualification
+            <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <select
+              name="qualification"
+              defaultValue=""
+              required
+              className="w-full appearance-none rounded-xl border border-dashed border-amber-300 bg-white px-4 py-3 pr-10 text-sm text-gray-700 focus:outline-none focus:border-amber-500"
+            >
+              <option value="" disabled>
+                Highest Qualification
+              </option>
+              <option value="12">12</option>
+              <option value="Degree">Degree</option>
+              <option value="Freshers">Freshers</option>
+              <option value="Diploma">Diploma</option>
+            </select>
+            <svg
+              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
         </div>
 
         <button
           type="submit"
-          className="w-full rounded-xl border border-gray-200 bg-gray-100 px-4 py-3 text-sm font-black text-gray-600 hover:bg-gray-900 hover:text-white transition-colors"
+          className="w-full rounded-xl bg-amber-400 py-3 text-sm font-semibold text-white hover:bg-amber-500 transition-colors"
         >
-          Request Callback
+          Submit
         </button>
       </div>
     </form>
   )
 }
 
-// ── Faculty Details Component ──────────────────────────────────────────────────
 function FacultyDetails({ section }) {
   const { instructor } = section
 
@@ -392,11 +424,12 @@ function FacultyDetails({ section }) {
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 p-8">
           {/* Instructor Image */}
-          <div className="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden shrink-0 border-4 border-gray-50 shadow-inner group-hover:scale-[1.02] transition-transform duration-500">
-            <img 
-              src={instructor.image} 
+          <div className="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden shrink-0 border-4 border-gray-50 shadow-inner group-hover:scale-[1.02] transition-transform duration-500 relative">
+            <Image 
+              src={`${instructor.image.split('?')[0]}?auto=format&fit=crop&q=75&w=600`}
               alt={instructor.name} 
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           </div>
 
@@ -549,23 +582,23 @@ function StudentLife() {
     {
       title: 'Doubt-Clearing Session',
       tag: '1:1 Guidance',
-      desc: 'An Indian teacher clearing doubts with a 20-year-old student.',
-      src: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1400&q=80',
+      // desc: 'An Indian teacher clearing doubts with a 20-year-old student.',
+      src: '/images/image003.png',
       alt: 'Indian teacher explaining a doubt to a college student in a one-to-one learning session',
       span: true,
     },
     {
       title: 'One-to-One Learning',
       tag: 'Mentorship',
-      desc: 'Focused attention to speed up concept mastery.',
-      src: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
+      // desc: 'Focused attention to speed up concept mastery.',
+      src: '/images/image001.png',
       alt: 'Mentor guiding a learner during a one-to-one study session',
     },
     {
       title: 'Group Discussion',
       tag: 'Collaborate',
-      desc: 'Students learning together through peer discussion.',
-      src: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=1200&q=80',
+      // desc: 'Students learning together through peer discussion.',
+      src: '/images/image004.png',
       alt: 'Students collaborating in a group discussion session',
     },
   ]
@@ -602,15 +635,14 @@ function StudentLife() {
           <figure
             key={item.title}
             className={`group relative overflow-hidden rounded-2xl border border-gray-100 shadow-sm ${
-              item.span ? 'sm:col-span-2' : ''
+              item.span ? 'sm:col-span-2 h-56 sm:h-60' : 'h-48'
             }`}
           >
-            <img
+            <Image
               src={item.src}
               alt={item.alt}
-              className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
-                item.span ? 'h-56 sm:h-60' : 'h-48'
-              }`}
+              fill
+              className={`object-cover transition-transform duration-500 group-hover:scale-105`}
             />
             <figcaption className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4">
               <span className="text-[10px] font-black uppercase tracking-widest text-white/80">
