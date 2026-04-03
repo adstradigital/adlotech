@@ -59,7 +59,7 @@ export default function FAQ() {
   const visibleFaqs = showAll ? faqs : faqs.slice(0, INITIAL_VISIBLE)
 
   return (
-    <section className="bg-white py-16 md:py-20">
+    <section className="bg-white pt-10 pb-8 md:pt-12 md:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <h2 className="text-[1.75rem] md:text-[2.25rem] font-bold text-gray-900 mb-8 tracking-tight">
@@ -79,7 +79,7 @@ export default function FAQ() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-gray-100 rounded-xl border border-gray-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden"
+                  className="bg-gray-50 rounded-xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden"
                 >
                   {/* Question button */}
                   <button
@@ -156,7 +156,7 @@ export default function FAQ() {
             className={`flex items-center gap-2 transition-all duration-200 focus:outline-none rounded-full ${
               showAll
                 ? 'text-sm font-semibold text-gray-500 hover:text-red-600'
-                : 'text-sm font-semibold text-gray-700 border border-gray-200 hover:border-red-500 hover:text-red-600 px-6 py-2.5 rounded-full shadow-sm bg-gray-100'
+                : 'text-sm font-semibold text-gray-700 border border-gray-200 hover:border-red-500 hover:text-red-600 px-6 py-2.5 rounded-full shadow-sm bg-gray-50'
             }`}
           >
             {showAll ? (

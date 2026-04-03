@@ -1,10 +1,11 @@
 'use client'
-import { FiShield, FiAward } from 'react-icons/fi'
+import { FiShield, FiAward, FiArrowRight } from 'react-icons/fi'
 import AnimatedSection from './AnimatedSection'
+import Link from 'next/link'
 
 const HomeAbout = () => {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="pt-12 pb-10 bg-white relative overflow-hidden">
       {/* Background Accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-50 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2" />
@@ -18,7 +19,7 @@ const HomeAbout = () => {
               
               <div className="relative aspect-square md:aspect-video lg:aspect-square bg-slate-900 rounded-[2rem] overflow-hidden shadow-2xl border border-slate-800 flex items-center justify-center p-8">
                 <img
-                  src="/images/imageee05.png"
+                  src="/images/futuree.jpeg"
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 w-full h-full object-cover opacity-55"
@@ -92,6 +93,18 @@ const HomeAbout = () => {
                     Ensuring that our training standards meet the highest levels of global quality and credibility.
                   </p>
                 </div>
+              </div>
+              
+              <div className="mt-10">
+                <Link
+                  href="/syllabus"
+                  className="inline-flex items-center gap-4 bg-[#f8a822] hover:bg-[#e49b1e] transition-colors rounded-full pl-7 pr-1.5 py-1.5 text-white font-bold shadow-md"
+                >
+                  <span className="text-[17px] tracking-wide">Why Choose Us</span>
+                  <span className="bg-white rounded-full p-2.5 flex items-center justify-center shadow-sm">
+                    <FiArrowRight className="text-[#f8a822] w-5 h-5" strokeWidth={3} />
+                  </span>
+                </Link>
               </div>
             </div>
           </AnimatedSection>

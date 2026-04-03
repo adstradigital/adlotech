@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiUser, FiPhone, FiBookOpen, FiX, FiCalendar, FiAward, FiArrowRight } from 'react-icons/fi'
+import { FiUser, FiPhone, FiX, FiAward } from 'react-icons/fi'
 
 const EnquireFloat = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,21 +31,20 @@ const EnquireFloat = () => {
     setIsOpen(false)
   }
 
+  useEffect(() => {
+    const handleOpenEnquireForm = () => {
+      setIsOpen(true)
+    }
+
+    window.addEventListener('open-enquire-form', handleOpenEnquireForm)
+
+    return () => {
+      window.removeEventListener('open-enquire-form', handleOpenEnquireForm)
+    }
+  }, [])
+
   return (
     <>
-      {/* Floating Button on the Right */}
-      <div className="fixed bottom-6 right-6 z-[60]">
-        <motion.button
-          onClick={() => setIsOpen(true)}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-3 bg-slate-900 text-white px-7 py-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] font-black text-sm transition-all hover:bg-blue-600 overflow-hidden relative group"
-        >
-          <FiCalendar className="w-5 h-5 text-blue-400 group-hover:text-white transition-colors" />
-          <span className="tracking-tight uppercase">Enquire Now</span>
-        </motion.button>
-      </div>
-
       {/* Enquiry Modal */}
       <AnimatePresence>
         {isOpen && (

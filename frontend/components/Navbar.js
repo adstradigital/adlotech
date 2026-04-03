@@ -2,14 +2,20 @@
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiArrowDown, FiBookOpen, FiBriefcase, FiTrendingUp, FiGlobe } from 'react-icons/fi'
+import { FiArrowDown, FiBookOpen, FiBriefcase, FiTrendingUp, FiGlobe, FiCalendar } from 'react-icons/fi'
 import BrandLogo from './BrandLogo'
 
 const navLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/contact', label: 'Why Us' },
+  { href: '/about', label: 'About', section: 'about' },
+  { href: '/services', label: 'Services', section: 'services' },
+  { href: '/contact', label: 'Contact', section: 'contact' },
+]
+
+const headerLinks = [
+  { href: '/', label: 'Home', section: 'home' },
+  ...navLinks,
 ]
 
 const menuContent = {
@@ -44,18 +50,21 @@ const menuContent = {
     ]
   },
   '/contact': {
-    title: 'Why Choose Adlotech?',
+    title: 'Get in Touch',
     description: 'Ready to take the next step? Our admissions team is here to answer all your questions and help you start your journey.',
     links: [
-      { label: 'info@adlotech.com', href: 'mailto:info@adlotech.com' },
-      { label: 'Support Center', href: '#' },
-      { label: 'Visit our Campus', href: '#' }
+      { label: 'info.adlotech@gmail.com', href: 'mailto:info.adlotech@gmail.com' },
+      { label: 'Support Center', href: '/syllabus' },
+      { label: 'Visit our Campus', href: 'https://www.google.com/maps/search/?api=1&query=Husna+Complex%2C+65%2F2244%2C+Kannur+Rd%2C+near+English+Church%2C+opp.+SL+Towers%2C+West+Nadakkave%2C+West%2C+Nadakkave%2C+Kozhikode%2C+Kerala+673011' }
     ]
   }
 }
 
 const Navbar = () => {
+  const pathname = usePathname()
+  const isHome = pathname === '/'
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredLink, setHoveredLink] = useState('/about')
   const [contactForm, setContactForm] = useState({
@@ -67,6 +76,18 @@ const Navbar = () => {
   const [isSendingContact, setIsSendingContact] = useState(false)
   const [contactStatus, setContactStatus] = useState(null) // null | success | error
   const [contactError, setContactError] = useState('')
+  const isHeroTopState = isHome && activeSection === 'home' && !isScrolled
+
+  const openEnquireForm = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('open-enquire-form'))
+    }
+  }
+
+  const handleSectionNavigate = useCallback((section) => {
+    if (typeof window === 'undefined') return
+    window.dispatchEvent(new CustomEvent('spa-navigate', { detail: section }))
+  }, [])
 
   const openMenu = useCallback((section = '/about') => {
     setHoveredLink(section)
@@ -107,18 +128,30 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
+    const handleSpaNavigate = (event) => {
+      setActiveSection(event?.detail || 'home')
+    }
+    window.addEventListener('spa-navigate', handleSpaNavigate)
+    return () => window.removeEventListener('spa-navigate', handleSpaNavigate)
+  }, [])
+
+  useEffect(() => {
     const handleOpenMenu = (e) => {
       const section = e.detail || '/about'
       openMenu(section)
     }
 
+    const handleOpenContactMenu = () => {
+      openMenu('/contact')
+    }
+
     window.addEventListener('open-menu', handleOpenMenu)
     // Backward compatibility for existing triggers
-    window.addEventListener('open-contact-menu', () => openMenu('/contact'))
+    window.addEventListener('open-contact-menu', handleOpenContactMenu)
     
     return () => {
       window.removeEventListener('open-menu', handleOpenMenu)
-      window.removeEventListener('open-contact-menu', () => openMenu('/contact'))
+      window.removeEventListener('open-contact-menu', handleOpenContactMenu)
     }
   }, [openMenu])
 
@@ -199,40 +232,72 @@ const Navbar = () => {
       <nav className={`sticky top-0 w-full z-40 transition-all duration-300 ${
         isScrolled 
           ? 'bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm py-2.5' 
-          : 'bg-white shadow-none py-3'
+          : isHeroTopState
+            ? 'bg-transparent border-none shadow-none py-3'
+            : 'bg-white shadow-none py-3'
       }`}>
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            {/* Logo */}
-            <Link 
-              href="/" 
-              className="inline-flex"
-            >
-              <BrandLogo className="max-w-[75px] sm:max-w-[85px]" priority />
-            </Link>
+          <div className="relative flex justify-between items-center">
+            <div className={`flex items-center justify-start w-[75px] sm:w-[85px] transition-opacity duration-300 ${isScrolled ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+              <Link href="/">
+                <Image src="/images/adlotech-logo.svg" alt="Adlotech Logo" width={85} height={35} className="w-full h-auto object-contain" priority />
+              </Link>
+            </div>
 
-            <div className="flex items-center gap-6">
-              {/* Scroll Down Button */}
-              <motion.button
-                onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })}
-                whileHover={{ y: 3 }}
-                className="hidden md:flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-600 transition-all duration-300"
-                title="Scroll to Footer"
-              >
-                <FiArrowDown className="w-4 h-4" />
-              </motion.button>
+            <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 lg:gap-10">
+              {headerLinks.map((link) => {
+                const isActive = pathname === link.href
+                return (
+                  <button
+                    key={`top-${link.href}`}
+                    type="button"
+                    onClick={() => handleSectionNavigate(link.section)}
+                    className={`text-base font-bold tracking-wide transition-colors duration-300 ${
+                      isActive
+                        ? (isHeroTopState ? 'text-blue-200' : 'text-blue-600')
+                        : (isHeroTopState ? 'text-white hover:text-blue-200' : 'text-gray-700 hover:text-blue-600')
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                )
+              })}
+            </nav>
 
-              {/* Menu Button */}
-              <button
-                onClick={() => openMenu('/about')}
-                className="group flex items-center gap-3 transition-colors duration-300 font-bold tracking-widest text-xs text-gray-900 hover:text-blue-600"
-              >
-                <div className="flex flex-col gap-[4px] justify-center items-end">
-                  <span className="h-[1.5px] w-6 bg-gray-900 transition-all duration-300 group-hover:bg-blue-600"></span>
-                  <span className="h-[1.5px] w-6 bg-gray-900 transition-all duration-300 group-hover:bg-blue-600 group-hover:w-4"></span>
-                </div>
-                MENU
-              </button>
+            <div className="flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-3">
+                <motion.button
+                  type="button"
+                  onClick={openEnquireForm}
+                  whileHover={{ y: -1, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-2 rounded-2xl bg-[#0b1a3d] px-5 py-3 text-xs font-black uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(11,26,61,0.3)] transition-colors hover:bg-[#112657]"
+                >
+                  <FiCalendar className="h-4 w-4 text-blue-300" />
+                  <span>Enquire Now</span>
+                </motion.button>
+
+                <motion.button
+                  onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })}
+                  whileHover={{ y: 3 }}
+                  className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-600 transition-all duration-300"
+                  title="Scroll to Footer"
+                >
+                  <FiArrowDown className="w-4 h-4" />
+                </motion.button>
+              </div>
+
+              <div className="flex md:hidden">
+                <motion.button
+                  type="button"
+                  onClick={openEnquireForm}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#0b1a3d] px-3 py-2 text-[11px] font-black uppercase tracking-wide text-white transition-colors hover:bg-[#112657]"
+                >
+                  <FiCalendar className="h-3.5 w-3.5 text-blue-300" />
+                  <span>Enquire</span>
+                </motion.button>
+              </div>
             </div>
           </div>
         </div>
@@ -271,7 +336,7 @@ const Navbar = () => {
                   className="object-cover object-top"
                   priority
                 />
-                {/* Gradient: transparent at top (shows faces) → dark at bottom (readable content) */}
+                {/* Gradient: transparent at top (shows faces) ? dark at bottom (readable content) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/15" />
               </motion.div>
             </AnimatePresence>
@@ -300,7 +365,6 @@ const Navbar = () => {
 
             {/* Menu Content Container */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 flex flex-col md:flex-row items-end justify-between h-full pb-10 md:pb-14 pt-24">
-              
               {/* Left Side: Navigation Links */}
               <div className="w-full md:w-1/2">
                 <ul className="space-y-6 md:space-y-10">
@@ -319,9 +383,13 @@ const Navbar = () => {
                         <span className="text-xl md:text-2xl text-white/30 font-bold mb-1 md:mb-0 md:mr-10 group-hover:text-blue-500 transition-colors duration-300">
                           0{index + 1}
                         </span>
-                        <span className={`bg-clip-text text-transparent transition-colors duration-300 ${
-                          hoveredLink === link.href ? 'bg-gradient-to-r from-blue-400 to-purple-400' : 'bg-gradient-to-r from-gray-500 to-gray-700 group-hover:from-blue-400 group-hover:to-purple-400'
-                        }`}>
+                        <span
+                          className={`bg-clip-text text-transparent transition-colors duration-300 ${
+                            hoveredLink === link.href
+                              ? 'bg-gradient-to-r from-blue-400 to-purple-400'
+                              : 'bg-gradient-to-r from-gray-500 to-gray-700 group-hover:from-blue-400 group-hover:to-purple-400'
+                          }`}
+                        >
                           {link.label}
                         </span>
                       </button>
@@ -455,7 +523,7 @@ const Navbar = () => {
                           className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:-translate-y-0.5 hover:from-amber-300 hover:to-orange-400"
                         >
                           Why Choose Us
-                          <span aria-hidden="true">→</span>
+                          <span aria-hidden="true">?</span>
                         </Link>
                       </div>
                     ) : (
@@ -488,3 +556,4 @@ const Navbar = () => {
 }
 
 export default Navbar
+

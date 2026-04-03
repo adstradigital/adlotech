@@ -1,6 +1,6 @@
 
 'use client'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaLaptopCode, FaChalkboardTeacher, FaProjectDiagram, FaBriefcase, FaCertificate, FaUsers, FaCss3Alt, FaPython, FaReact } from 'react-icons/fa'
@@ -11,41 +11,48 @@ import HomeAbout from '@/components/HomeAbout'
 import MemoryTimeline from '@/components/MemoryTimeline'
 import CodeTypewriter from '@/components/CodeTypewriter'
 import FAQ from '@/components/FAQ'
-
-const SyntaxHighlightedCode = () => (
-  <div className="text-slate-600/90 font-medium pb-6">
-    <span className="text-pink-600 font-bold">def</span> <span className="text-blue-600 font-semibold">build_ai_model</span>(data):{'\n'}
-    {'    '}model = <span className="text-teal-600 font-semibold">NeuralNetwork</span>(){'\n'}
-    {'    '}<span className="text-pink-600 font-bold">for</span> epoch <span className="text-pink-600 font-bold">in</span> <span className="text-cyan-600 font-semibold">range</span>(<span className="text-orange-500">100</span>):{'\n'}
-    {'        '}pred = model.forward(data.x){'\n'}
-    {'        '}loss = compute_loss(pred){'\n'}
-    {'        '}model.optimize(loss){'\n'}
-    {'        '}<span className="text-pink-600 font-bold">if</span> epoch % <span className="text-orange-500">10</span> == <span className="text-orange-500">0</span>:{'\n'}
-    {'            '}<span className="text-cyan-600 font-semibold">print</span>(<span className="text-green-600">f"Loss: {'{'}loss:.4f{'}'}"</span>){'\n'}
-    {'    '}<span className="text-pink-600 font-bold">return</span> model{'\n'}
-    {'\n'}
-    <span className="text-amber-500">@app.get</span>(<span className="text-green-600">"/api/predict"</span>){'\n'}
-    <span className="text-pink-600 font-bold">async</span> <span className="text-pink-600 font-bold">def</span> <span className="text-blue-600 font-semibold">predict</span>(input: <span className="text-teal-600 font-semibold">Data</span>):{'\n'}
-    {'    '}features = preprocess(input){'\n'}
-    {'    '}res = model.predict(features){'\n'}
-    {'    '}<span className="text-pink-600 font-bold">return</span> {'{'}<span className="text-green-600">"prediction"</span>: res{'}'}{'\n'}
-    {'\n'}
-    <span className="text-pink-600 font-bold">class</span> <span className="text-teal-600 font-semibold">NeuralNetwork</span>:{'\n'}
-    {'    '}<span className="text-pink-600 font-bold">def</span> <span className="text-blue-600 font-semibold">__init__</span>(<span className="text-indigo-500">self</span>):{'\n'}
-    {'        '}<span className="text-indigo-500">self</span>.encoder = <span className="text-teal-600 font-semibold">Transformer</span>(){'\n'}
-    {'        '}<span className="text-indigo-500">self</span>.decoder = <span className="text-teal-600 font-semibold">Linear</span>(<span className="text-orange-500">512</span>, <span className="text-orange-500">10</span>){'\n'}
-    {'\n'}
-    {'    '}<span className="text-pink-600 font-bold">def</span> <span className="text-blue-600 font-semibold">forward</span>(<span className="text-indigo-500">self</span>, x):{'\n'}
-    {'        '}features = <span className="text-indigo-500">self</span>.encoder(x){'\n'}
-    {'        '}<span className="text-pink-600 font-bold">return</span> <span className="text-indigo-500">self</span>.decoder(features){'\n'}
-    {'\n'}
-    <span className="text-slate-400 italic"># Deploying to production...</span>{'\n'}
-    <span className="text-pink-600 font-bold">async</span> <span className="text-pink-600 font-bold">def</span> <span className="text-blue-600 font-semibold">main</span>():{'\n'}
-    {'    '}<span className="text-pink-600 font-bold">await</span> server.start(){'\n'}
-  </div>
-);
+import AboutPage from './about/page'
+import ServicesPage from './services/page'
+import ContactPage from './contact/page'
 
 export default function Home() {
+  const [activeVideoParagraph, setActiveVideoParagraph] = useState(0)
+  const [activeSection, setActiveSection] = useState('home')
+  const videoParagraphs = [
+    'Python is the language of the future. From artificial intelligence to data science, mastering Python opens doors to limitless possibilities in the tech world.',
+    'Master Python, Data Science, and Full-Stack Web Development through hands-on projects and real-world experience.',
+    'Build a strong foundation in programming logic, data structures, and clean coding practices that companies value.',
+    'Learn by doing: work on APIs, automation, and data workflows that mirror professional tech environments.',
+    'Graduate with confidence, a portfolio of real projects, and the skills to launch or accelerate your tech career.'
+  ]
+
+  useEffect(() => {
+    if (activeSection !== 'home') return
+    const interval = setInterval(() => {
+      setActiveVideoParagraph((prev) => (prev + 1) % videoParagraphs.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [activeSection, videoParagraphs.length])
+
+  useEffect(() => {
+    const handleSpaNavigate = (event) => {
+      const nextSection = event?.detail || 'home'
+      setActiveSection(nextSection)
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    }
+
+    window.addEventListener('spa-navigate', handleSpaNavigate)
+    return () => window.removeEventListener('spa-navigate', handleSpaNavigate)
+  }, [])
+
+  const handleHeroStartLearning = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('spa-navigate', { detail: 'contact' }))
+    }
+  }
 
   const toolsCovered = [
     { name: 'Python', icon: FaPython, color: '#3776AB' },
@@ -119,162 +126,64 @@ export default function Home() {
     'Aspiring Full Stack Developers'
   ]
 
-  // Hero section video loop implementation
-  const [growth, setGrowth] = useState(854);
-  const [recentGain, setRecentGain] = useState(24);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const added = Math.floor(Math.random() * 8) + 1;
-      setRecentGain(added);
-      setGrowth(prev => prev + added);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative bg-white pt-20 pb-12 lg:pt-24 lg:pb-14 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+      {activeSection === 'home' && (
+        <>
+          {/* Top Video Hero (covers header + hero area) */}
+          <section className="relative -mt-24 h-screen overflow-hidden">
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/videos/backgroundd.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 bg-slate-900/35" />
+        <div className="relative z-10 h-full">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+            <div className="max-w-3xl pt-16 sm:pt-20">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white">
+                Code Your <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-300">
+                  Future Today.
+                </span>
+              </h1>
 
-            {/* Left Content Area */}
-            <AnimatedSection>
-              <div className="max-w-2xl relative z-20">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6 shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-                  <span className="text-xs font-bold text-blue-700 tracking-wider uppercase">Adlotech Masterclass</span>
-                </div>
-
-                <h1 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
-                  Code Your <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">Future Today.</span>
-                </h1>
-
-                <p className="text-xl text-slate-600 mb-7 leading-relaxed font-medium">
-                  Master Python, Data Science, and Full-Stack Web Development through hands-on projects, industry mentorship, and cutting-edge curriculum.
-                </p>
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => window.dispatchEvent(new Event('open-contact-menu'))}
-                    className="px-8 py-4 bg-slate-900 text-white rounded-full font-bold hover:bg-slate-800 hover:-translate-y-0.5 transition-all duration-300 shadow-xl shadow-slate-900/20"
-                  >
-                    Start Learning
-                  </button>
-                  <Link
-                    href="/syllabus"
-                    className="px-8 py-4 bg-white text-slate-700 rounded-full font-bold border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all duration-300"
-                  >
-                    View Syllabus
-                  </Link>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Right Video Area */}
-            <AnimatedSection delay={0.2}>
-              <div className="relative w-full aspect-square md:aspect-[4/3] flex items-center justify-center z-20">
-
-                {/* Floating Scrolling Python Code Decoration - Placed purely on top to ensure complete visibility */}
-                <div
-                  className="absolute top-4 -left-10 md:-left-8 w-[24rem] h-[18rem] overflow-hidden pointer-events-none z-30"
-                  style={{ WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)', maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }}
+              <div className="h-[120px] md:h-[100px] mt-4 flex items-center">
+                <AnimatePresence mode="wait">
+                <motion.p
+                  key={activeVideoParagraph}
+                  initial={{ opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-lg md:text-2xl text-slate-100/95 leading-relaxed max-w-2xl"
                 >
-                  <motion.div
-                    className="font-mono text-[11px] sm:text-xs leading-[1.8] whitespace-pre tracking-wider drop-shadow-sm"
-                    animate={{ y: ["0%", "-50%"] }}
-                    transition={{ repeat: Infinity, ease: "linear", duration: 45 }}
-                  >
-                    <SyntaxHighlightedCode />
-                    <SyntaxHighlightedCode />
-                  </motion.div>
-                </div>
-
-                {/* Floating Growth Chart Card - Positioned at the absolute top right */}
-                <motion.div 
-                  className="absolute -top-28 -right-4 md:-right-12 z-40 w-44 transform hover:scale-105 transition-transform duration-300"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, type: 'spring', damping: 20 }}
-                >
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1 opacity-80">Skill Growth</p>
-                  <div className="flex items-end gap-2 mb-3">
-                     <span className="text-3xl font-black text-slate-900 tracking-tighter leading-none">{growth}%</span>
-                     <motion.span 
-                       key={growth}
-                       initial={{ opacity: 0, scale: 0.8 }}
-                       animate={{ opacity: 1, scale: 1 }}
-                       className="text-xs font-bold text-blue-600 mb-1 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100/50 shadow-sm"
-                     >
-                       +{recentGain}%
-                     </motion.span>
-                  </div>
-                  <div className="h-16 w-full relative mt-2">
-                    <motion.svg 
-                      viewBox="0 0 100 40" 
-                      className="w-full h-full overflow-visible"
-                      preserveAspectRatio="none"
-                    >
-                      <defs>
-                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#2563eb" stopOpacity="0.25" />
-                          <stop offset="100%" stopColor="#2563eb" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      <motion.path 
-                        d="M0,40 L15,35 L30,38 L45,20 L60,25 L75,10 L90,15 L100,2 L100,40 L0,40 Z"
-                        fill="url(#chartGradient)"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0, 1, 1, 0] }}
-                        transition={{ repeat: Infinity, duration: 3.5, times: [0, 0.2, 0.8, 1] }}
-                      />
-                      <motion.path 
-                        d="M0,40 L15,35 L30,38 L45,20 L60,25 L75,10 L90,15 L100,2"
-                        fill="none"
-                        stroke="#2563eb"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: [0, 1, 1, 0] }}
-                        transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut", times: [0, 0.6, 0.9, 1] }}
-                      />
-                      <motion.circle 
-                        cx="100" cy="2" r="4" 
-                        fill="#ffffff" 
-                        stroke="#2563eb"
-                        strokeWidth="2.5"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: [0, 0, 1, 1, 0] }}
-                        transition={{ repeat: Infinity, duration: 3.5, times: [0, 0.5, 0.6, 0.9, 1] }}
-                        className="drop-shadow-md"
-                      />
-                    </motion.svg>
-                  </div>
-                </motion.div>
-
-                {/* Seamless Video Container */}
-                <div className="relative w-full h-full group flex items-center justify-center scale-105">
-                  {/* Subtle gradient mask to ensure the bottom edge fades out smoothly */}
-                  <div className="absolute bottom-0 inset-x-0 h-1/4 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
-
-                  <video
-                    className="w-[110%] h-[110%] max-w-none object-contain transform transition-transform duration-700 group-hover:scale-[1.02] mix-blend-multiply"
-                    style={{ filter: 'contrast(1.08) brightness(1.1)' }}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  >
-                    <source src="/videos/Comp.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                  {videoParagraphs[activeVideoParagraph]}
+                </motion.p>
+                </AnimatePresence>
               </div>
-            </AnimatedSection>
 
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <button
+                  type="button"
+                  onClick={handleHeroStartLearning}
+                  className="px-7 py-3.5 rounded-full border border-white/50 bg-white/10 text-white font-semibold transition hover:bg-blue-600 hover:border-blue-500 hover:text-white active:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900/40"
+                >
+                  Start Learning
+                </button>
+                <Link
+                  href="/syllabus"
+                  className="px-7 py-3.5 rounded-full border border-white/50 bg-white/10 text-white font-semibold transition hover:bg-blue-600 hover:border-blue-500 hover:text-white active:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900/40"
+                >
+                  View Syllabus
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -282,7 +191,7 @@ export default function Home() {
       <HomeAbout />
 
       {/* Roadmap Section */}
-      <section className="pt-10 pb-10 md:pt-12 md:pb-14 bg-white relative overflow-visible">
+          <section className="pt-10 pb-0 md:pt-12 md:pb-2 bg-white relative overflow-visible">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <AnimatedSection>
             <div className="text-center mb-10 md:mb-12">
@@ -295,15 +204,6 @@ export default function Home() {
               <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                 A visually guided masterclass taking you from foundation to full-stack mastery.
               </p>
-              <div className="mt-6">
-                <Link
-                  href="/why-choose-us"
-                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-amber-300 hover:to-orange-400"
-                >
-                  Why Choose Us
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
             </div>
           </AnimatedSection>
 
@@ -312,7 +212,7 @@ export default function Home() {
       </section>
 
       {/* Tools Covered Section */}
-      <section className="pt-8 pb-16 bg-white overflow-hidden">
+          <section className="pt-0 pb-6 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="mb-10 text-center md:text-left">
@@ -347,7 +247,7 @@ export default function Home() {
       <MemoryTimeline />
 
       {/* Modernized Why Python Section */}
-      <section className="py-20 md:py-24 relative overflow-hidden">
+          <section className="pt-12 pb-12 md:pt-14 md:pb-16 relative overflow-hidden">
         {/* Blue-purple cinematic tint to match the hero style */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/85 to-purple-900/90 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(96,165,250,0.25)_0%,_transparent_45%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.28)_0%,_transparent_55%)] pointer-events-none" />
@@ -486,7 +386,13 @@ export default function Home() {
         </section>
       )}
 
-      <FAQ />
+          <FAQ />
+        </>
+      )}
+
+      {activeSection === 'about' && <AboutPage />}
+      {activeSection === 'services' && <ServicesPage />}
+      {activeSection === 'contact' && <ContactPage />}
     </>
   )
 }

@@ -13,14 +13,14 @@ const WhatsAppFloat = () => {
   ]
 
   return (
-    <div className="fixed bottom-6 left-6 z-[60] flex flex-col items-start gap-4">
+    <div className="fixed bottom-28 right-6 z-[60] flex flex-col items-end gap-4">
       {/* Popover Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: -20, y: 20 }}
+            initial={{ opacity: 0, scale: 0.8, x: 20, y: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, x: -10, y: 10 }}
+            exit={{ opacity: 0, scale: 0.8, x: 10, y: 10 }}
             className="mb-2 w-72 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl"
           >
             {/* Header */}
@@ -110,4 +110,3 @@ const WhatsAppFloat = () => {
 }
 
 export default WhatsAppFloat
-
