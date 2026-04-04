@@ -90,30 +90,30 @@ export default function FAQ() {
                     className="w-full flex items-center justify-between gap-6 px-6 py-5 text-left group transition-all duration-300 hover:bg-gray-100/50 outline-none"
                   >
                     {/* Question text with index */}
-                    <span
-                      className={`text-sm md:text-[0.9375rem] font-bold leading-snug transition-colors duration-300 ${
-                        isOpen ? 'text-red-600' : 'text-gray-700'
-                      }`}
-                    >
-                      <span className="text-gray-400 mr-2">Q{idx + 1}:</span>
-                      {faq.question}
-                    </span>
-
-                    {/* Red circular toggle button on far right */}
-                    <div
-                      className={`flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full border-2 border-red-100 transition-all duration-500 ${
-                        isOpen ? 'bg-red-600 border-red-600' : 'bg-white group-hover:border-red-400'
-                      }`}
-                    >
-                      <motion.div
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.4, ease: "backOut" }}
+                    <div className="flex items-center gap-4">
+                      {/* Left circular arrow icon */}
+                      <div className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-500 ${
+                        isOpen ? 'bg-red-600 border-red-600' : 'bg-red-50 border-red-100 group-hover:border-red-200'
+                      }`}>
+                        <motion.div
+                          animate={{ rotate: isOpen ? 0 : -90 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                          <FiChevronDown className={`w-4 h-4 transition-colors duration-300 ${
+                            isOpen ? 'text-white' : 'text-red-500'
+                          }`} />
+                        </motion.div>
+                      </div>
+                      
+                      <span
+                        className={`text-base md:text-[1.0625rem] font-medium leading-tight transition-colors duration-300 ${
+                          isOpen ? 'text-red-600' : 'text-gray-800'
+                        }`}
                       >
-                        <FiChevronDown className={`w-3.5 h-3.5 transition-colors duration-300 ${
-                          isOpen ? 'text-white' : 'text-red-500 group-hover:text-red-600'
-                        }`} />
-                      </motion.div>
+                        {faq.question}
+                      </span>
                     </div>
+
                   </button>
 
                   {/* Answer panel with adjusted layout */}
@@ -131,7 +131,7 @@ export default function FAQ() {
                         className="overflow-hidden"
                       >
                         <div className="px-6 pb-6 pt-1 border-t border-gray-100/50">
-                          <p className="pl-10 md:pl-[3.25rem] text-[0.875rem] md:text-[0.9375rem] text-gray-500 font-medium leading-relaxed">
+                          <p className="pl-12 md:pl-[3.75rem] text-[0.875rem] md:text-[1rem] text-gray-500 font-medium leading-relaxed">
                             {faq.answer}
                           </p>
                         </div>

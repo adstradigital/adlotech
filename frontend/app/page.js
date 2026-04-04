@@ -19,11 +19,26 @@ export default function Home() {
   const [activeVideoParagraph, setActiveVideoParagraph] = useState(0)
   const [activeSection, setActiveSection] = useState('home')
   const videoParagraphs = [
-    'Python is the language of the future. From artificial intelligence to data science, mastering Python opens doors to limitless possibilities in the tech world.',
-    'Master Python, Data Science, and Full-Stack Web Development through hands-on projects and real-world experience.',
-    'Build a strong foundation in programming logic, data structures, and clean coding practices that companies value.',
-    'Learn by doing: work on APIs, automation, and data workflows that mirror professional tech environments.',
-    'Graduate with confidence, a portfolio of real projects, and the skills to launch or accelerate your tech career.'
+    {
+      title: 'Master Python, Master Your Future',
+      body: "Learn the world's most versatile language. Build skills that open doors to limitless opportunities."
+    },
+    {
+      title: 'Guaranteed Learning, Guaranteed Growth',
+      body: 'Our sureshot training ensures clarity, confidence, and career-ready expertise in Python.'
+    },
+    {
+      title: 'From Basics to Brilliance in Python',
+      body: 'Step-by-step guidance takes you from beginner to advanced coder with ease.'
+    },
+    {
+      title: 'Industry Experts. Real Outcomes.',
+      body: 'Train with professionals who deliver practical knowledge and guaranteed results.'
+    },
+    {
+      title: 'Internships That Launch Careers',
+      body: 'Gain hands-on experience with stipends and projects that shape your future.'
+    }
   ]
 
   useEffect(() => {
@@ -131,7 +146,7 @@ export default function Home() {
       {activeSection === 'home' && (
         <>
           {/* Top Video Hero (covers header + hero area) */}
-          <section className="relative -mt-24 h-screen overflow-hidden">
+          <section className="relative h-screen overflow-hidden" id="hersection1">
         <video
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
@@ -142,29 +157,27 @@ export default function Home() {
           <source src="/videos/backgroundd.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-slate-900/35" />
-        <div className="relative z-10 h-full">
+        <div className="absolute inset-0 bg-black/50" />
+          <div className="relative z-10 h-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-            <div className="max-w-3xl pt-16 sm:pt-20">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white">
-                Code Your <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-300">
-                  Future Today.
-                </span>
-              </h1>
-
-              <div className="h-[120px] md:h-[100px] mt-4 flex items-center">
+            <div className="max-w-3xl">
+              <div className="min-h-[220px] md:min-h-[200px]">
                 <AnimatePresence mode="wait">
-                <motion.p
-                  key={activeVideoParagraph}
-                  initial={{ opacity: 0, y: 22 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.6 }}
-                  className="text-lg md:text-2xl text-slate-100/95 leading-relaxed max-w-2xl"
-                >
-                  {videoParagraphs[activeVideoParagraph]}
-                </motion.p>
+                  <motion.div
+                    key={activeVideoParagraph}
+                    initial={{ opacity: 0, y: 22 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.6 }}
+                    className="space-y-4"
+                  >
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-300 drop-shadow-[0_3px_18px_rgba(56,189,248,0.35)]">
+                      {videoParagraphs[activeVideoParagraph].title}
+                    </h1>
+                    <p className="text-lg md:text-2xl text-slate-100/95 leading-relaxed max-w-2xl">
+                      {videoParagraphs[activeVideoParagraph].body}
+                    </p>
+                  </motion.div>
                 </AnimatePresence>
               </div>
 
@@ -212,12 +225,11 @@ export default function Home() {
       </section>
 
       {/* Tools Covered Section */}
-          <section className="pt-0 pb-6 bg-white overflow-hidden">
+      <section className="pt-0 pb-6 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="mb-10 text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Tools covered</h2>
-              <p className="text-lg text-gray-500 italic">Tools covered in the course.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Master tools covered in the course</h2>
             </div>
           </AnimatedSection>
 

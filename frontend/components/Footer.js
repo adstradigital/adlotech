@@ -1,7 +1,8 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FiInstagram, FiLinkedin, FiFacebook, FiArrowUp, FiMapPin, FiMail, FiPhone } from 'react-icons/fi'
+import { FiArrowUp, FiMapPin, FiMail, FiPhone } from 'react-icons/fi'
+import { FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa'
 import BrandLogo from './BrandLogo'
 
 const Footer = () => {
@@ -76,10 +77,10 @@ const Footer = () => {
                   href="https://www.instagram.com/adlotech.training/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                  className="group inline-flex items-center gap-3 text-sm text-gray-600 hover:text-[#E4405F] transition-colors font-medium"
                 >
-                  <FiInstagram className="w-4 h-4" />
-                  <span>instagram</span>
+                  <FaInstagram className="w-5 h-5 text-[#E4405F] group-hover:scale-110 transition-transform" />
+                  <span>Instagram</span>
                 </a>
               </li>
               <li>
@@ -87,10 +88,10 @@ const Footer = () => {
                   href="https://www.linkedin.com/company/adlotech-training"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                  className="group inline-flex items-center gap-3 text-sm text-gray-600 hover:text-[#0A66C2] transition-colors font-medium"
                 >
-                  <FiLinkedin className="w-4 h-4" />
-                  <span>linkedin</span>
+                  <FaLinkedin className="w-5 h-5 text-[#0A66C2] group-hover:scale-110 transition-transform" />
+                  <span>LinkedIn</span>
                 </a>
               </li>
               <li>
@@ -98,10 +99,10 @@ const Footer = () => {
                   href="https://www.facebook.com/adlotechtraining"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                  className="group inline-flex items-center gap-3 text-sm text-gray-600 hover:text-[#1877F2] transition-colors font-medium"
                 >
-                  <FiFacebook className="w-4 h-4" />
-                  <span>facebook</span>
+                  <FaFacebook className="w-5 h-5 text-[#1877F2] group-hover:scale-110 transition-transform" />
+                  <span>Facebook</span>
                 </a>
               </li>
             </ul>

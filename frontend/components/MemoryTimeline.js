@@ -70,7 +70,7 @@ const MemoryTimeline = () => {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="h-full w-full object-contain"
+                    className="h-full w-full object-cover"
                     loading="lazy"
                   />
                 </div>

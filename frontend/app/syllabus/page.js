@@ -665,7 +665,7 @@ export default function SyllabusPage() {
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id))
 
   return (
-    <section className="bg-white min-h-screen py-16 md:py-20">
+    <section className="bg-white min-h-screen pt-24 pb-16 md:pt-28 md:pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}

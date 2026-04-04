@@ -10,27 +10,67 @@ export default function Contact() {
     email: '',
     phone: '',
     city: '',
-    course: '',
     message: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [status, setStatus] = useState(null) // null | success | error
+  const [errorText, setErrorText] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form Submit:', formData)
-    // Handle form logic
+    if (isSubmitting) return
+
+    setStatus(null)
+    setErrorText('')
+    setIsSubmitting(true)
+
+    try {
+      const composedMessage = [
+        'Contact form submission',
+        `Phone: ${formData.phone || 'Not provided'}`,
+        `City: ${formData.city || 'Not provided'}`,
+        '',
+        formData.message || 'No message'
+      ].join('\n')
+
+      const response = await fetch('http://localhost:8000/api/contact/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: composedMessage
+        })
+      })
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        const firstError = Object.values(data || {})[0]
+        const errorText = Array.isArray(firstError) ? firstError[0] : 'Failed to send message.'
+        throw new Error(errorText)
+      }
+
+      setStatus('success')
+      setFormData({ name: '', email: '', phone: '', city: '', message: '' })
+    } catch (error) {
+      setStatus('error')
+      setErrorText(error?.message || 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen pt-16 sm:pt-20">
       {/* Hero Section */}
       <section className="relative w-full h-[360px] sm:h-[460px] lg:h-[560px] overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-[center_top_10%]"
+          className="absolute inset-0 bg-cover bg-top"
           style={{ backgroundImage: "url('/images/contact.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#061326]/80 via-[#0c2445]/65 to-[#061326]/55" />
@@ -57,7 +97,6 @@ export default function Contact() {
                 <div className="mb-12">
                   <h2 className="text-3xl font-bold text-[#14213d] mb-4 relative inline-block">
                     Keep In Touch With Us
-                    <span className="absolute -bottom-2 left-0 w-16 h-1 bg-purple-600 rounded-full"></span>
                   </h2>
                   <p className="mt-8 text-gray-500 leading-relaxed font-medium">
                     If you require clarifications on any of the courses or the admission process, we are happy to help.
@@ -67,41 +106,61 @@ export default function Contact() {
                 <div className="space-y-10">
                   {/* Call Section */}
                   <div className="flex gap-6 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-full border-2 border-purple-100 flex items-center justify-center text-purple-600 transition-all duration-300 group-hover:bg-purple-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-purple-200">
+                    <div className="flex-shrink-0 w-14 h-14 rounded-full border-2 border-blue-100 flex items-center justify-center text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-200">
                       <FaPhoneAlt size={22} />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-[#14213d] mb-2">Call us on:</h3>
                       <div className="text-gray-600 space-y-1 font-medium">
-                        <p>+91 956 756 8185</p>
-                        <p>+91 9744 77 9574</p>
+                        <a
+                          href="tel:+919567568185"
+                          className="block transition-colors hover:text-purple-700"
+                        >
+                          +91 956 756 8185
+                        </a>
+                        <a
+                          href="tel:+919744779574"
+                          className="block transition-colors hover:text-purple-700"
+                        >
+                          +91 9744 77 9574
+                        </a>
                       </div>
                     </div>
                   </div>
 
                   {/* Email Section */}
                   <div className="flex gap-6 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-full border-2 border-purple-100 flex items-center justify-center text-purple-600 transition-all duration-300 group-hover:bg-purple-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-purple-200">
+                    <div className="flex-shrink-0 w-14 h-14 rounded-full border-2 border-blue-100 flex items-center justify-center text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-200">
                       <FaEnvelope size={22} />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-[#14213d] mb-2">Email us at:</h3>
                       <div className="text-gray-600 space-y-1 font-medium">
-                        <p>info.adlotech@gmail.com</p>
+                        <a
+                          href="mailto:info.adlotech@gmail.com"
+                          className="transition-colors hover:text-purple-700"
+                        >
+                          info.adlotech@gmail.com
+                        </a>
                       </div>
                     </div>
                   </div>
 
                   {/* Location Section */}
                   <div className="flex gap-6 items-start group">
-                    <div className="flex-shrink-0 w-14 h-14 rounded-full border-2 border-purple-100 flex items-center justify-center text-purple-600 transition-all duration-300 group-hover:bg-purple-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-purple-200">
+                    <div className="flex-shrink-0 w-14 h-14 rounded-full border-2 border-blue-100 flex items-center justify-center text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-200">
                       <FaMapMarkerAlt size={22} />
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-[#14213d] mb-2">Locate us on :</h3>
-                      <p className="text-gray-600 leading-relaxed font-medium max-w-sm">
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=Husna+Complex%2C+65%2F2244%2C+Kannur+Rd%2C+near+English+Church%2C+opp.+SL+Towers%2C+West+Nadakkave%2C+West%2C+Nadakkave%2C+Kozhikode%2C+Kerala+673011"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 leading-relaxed font-medium max-w-sm transition-colors hover:text-purple-700"
+                      >
                         Husna Complex, 65/2244, Kannur Rd, near English Church, opp. SL Towers, West Nadakkave, West, Nadakkave, Kozhikode, Kerala 673011
-                      </p>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -117,7 +176,6 @@ export default function Contact() {
                   <div className="relative z-10">
                     <h2 className="text-3xl font-bold text-[#14213d] mb-4 relative inline-block">
                       Get in Touch
-                      <span className="absolute -bottom-2 left-0 w-16 h-1 bg-purple-600 rounded-full"></span>
                     </h2>
 
                     <form onSubmit={handleSubmit} className="mt-12 space-y-8">
@@ -128,6 +186,7 @@ export default function Contact() {
                           <input
                             type="text"
                             name="name"
+                            value={formData.name}
                             required
                             placeholder="Name *"
                             className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-purple-300 focus:ring-4 focus:ring-purple-50 outline-none transition-all duration-300"
@@ -141,6 +200,7 @@ export default function Contact() {
                           <input
                             type="email"
                             name="email"
+                            value={formData.email}
                             required
                             placeholder="E-mail *"
                             className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-purple-300 focus:ring-4 focus:ring-purple-50 outline-none transition-all duration-300"
@@ -154,6 +214,7 @@ export default function Contact() {
                           <input
                             type="tel"
                             name="phone"
+                            value={formData.phone}
                             required
                             placeholder="Phone *"
                             className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-purple-300 focus:ring-4 focus:ring-purple-50 outline-none transition-all duration-300"
@@ -167,6 +228,7 @@ export default function Contact() {
                           <input
                             type="text"
                             name="city"
+                            value={formData.city}
                             required
                             placeholder="City *"
                             className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-purple-300 focus:ring-4 focus:ring-purple-50 outline-none transition-all duration-300"
@@ -175,28 +237,12 @@ export default function Contact() {
                         </div>
                       </div>
 
-                      {/* Course Selection */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-[#14213d] ml-1">Select Course *</label>
-                        <select
-                          name="course"
-                          required
-                          className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-purple-300 focus:ring-4 focus:ring-purple-50 outline-none transition-all duration-300 appearance-none text-gray-500"
-                          onChange={handleChange}
-                        >
-                          <option value="">Choose a course...</option>
-                          <option value="python">Python & AI Masterclass</option>
-                          <option value="fullstack">Full Stack Development</option>
-                          <option value="datascience">Data Science with Python</option>
-                          <option value="machinelearning">Machine Learning & Neural Networks</option>
-                        </select>
-                      </div>
-
                       {/* Message */}
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-[#14213d] ml-1">Message</label>
                         <textarea
                           name="message"
+                          value={formData.message}
                           rows="5"
                           placeholder="Message"
                           className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50/50 focus:bg-white focus:border-purple-300 focus:ring-4 focus:ring-purple-50 outline-none transition-all duration-300 resize-none"
@@ -204,25 +250,12 @@ export default function Contact() {
                         ></textarea>
                       </div>
 
-                      {/* T&C */}
+                      {/* T&C
                       <div className="flex items-start gap-3 px-1">
                         <p className="text-sm text-gray-500 leading-relaxed">
                           By registering I accept the <a href="#" className="text-blue-500 hover:underline">TnC</a> and <a href="#" className="text-blue-500 hover:underline">Privacy Policy</a> of the website and give my consent to send me updates via Messages/Email ^
                         </p>
-                      </div>
-
-                      {/* Dummy reCAPTCHA */}
-                      <div className="bg-gray-50 border border-gray-100 rounded-lg p-5 flex items-center justify-between max-w-sm">
-                        <div className="flex items-center gap-4">
-                          <div className="w-8 h-8 border-2 border-gray-300 rounded bg-white"></div>
-                          <span className="text-sm font-medium text-gray-600">I'm not a robot</span>
-                        </div>
-                        <div className="text-center">
-                          <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" className="w-8 h-8 mx-auto" />
-                          <p className="text-[9px] text-gray-400 mt-1 font-bold">reCAPTCHA</p>
-                          <p className="text-[7px] text-gray-400 italic">Privacy - Terms</p>
-                        </div>
-                      </div>
+                      </div> */}
 
                       {/* Submit Button */}
                       <div>
@@ -230,11 +263,23 @@ export default function Contact() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           type="submit"
-                          className="px-10 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-xl shadow-xl shadow-purple-200 hover:shadow-2xl hover:shadow-purple-300 transition-all duration-300"
+                          disabled={isSubmitting}
+                          className="px-10 py-4 bg-[#0b1a3d] text-white font-black rounded-xl shadow-xl shadow-blue-200 hover:bg-[#112657] hover:shadow-2xl hover:shadow-blue-300 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          SEND MESSAGE
+                          {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                         </motion.button>
                       </div>
+
+                      {status === 'success' && (
+                        <p className="text-sm font-semibold text-emerald-600">
+                          Message sent successfully. We will get back to you soon.
+                        </p>
+                      )}
+                      {status === 'error' && (
+                        <p className="text-sm font-semibold text-red-600">
+                          {errorText}
+                        </p>
+                      )}
                     </form>
                   </div>
                 </div>
@@ -247,3 +292,8 @@ export default function Contact() {
     </div>
   )
 }
+
+
+
+
+

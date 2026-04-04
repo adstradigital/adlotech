@@ -59,6 +59,32 @@ const RoadmapTimeline = ({ steps }) => {
           aria-hidden="true"
           className="absolute right-[-12%] bottom-[-12%] w-[320px] lg:w-[420px] z-20 pointer-events-none drop-shadow-xl"
         />
+        <div className="absolute right-[6%] bottom-[26%] z-30 hidden lg:block w-[240px]">
+          {/* HR Label */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="absolute -top-3 left-6 z-40"
+          >
+            <span className="text-black text-[11px] font-black uppercase tracking-[0.2em]">HR</span>
+          </motion.div>
+
+          {/* YOU Label */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="absolute bottom-[38%] right-2 z-40"
+          >
+            <span className="text-black text-[11px] font-black uppercase tracking-[0.2em]">YOU</span>
+          </motion.div>
+
+          <img
+            src="/images/chat.png"
+            alt="Chat messages"
+            className="w-full drop-shadow-[0_20px_40px_rgba(15,23,42,0.22)]"
+          />
+        </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <svg viewBox="0 0 1000 900" className="w-full h-full drop-shadow-[0_16px_36px_rgba(0,0,0,0.14)]" preserveAspectRatio="none">
             <defs>

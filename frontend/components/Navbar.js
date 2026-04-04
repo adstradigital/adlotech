@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowDown, FiBookOpen, FiBriefcase, FiTrendingUp, FiGlobe, FiCalendar } from 'react-icons/fi'
 import BrandLogo from './BrandLogo'
@@ -62,6 +62,7 @@ const menuContent = {
 
 const Navbar = () => {
   const pathname = usePathname()
+  const router = useRouter()
   const isHome = pathname === '/'
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -84,10 +85,24 @@ const Navbar = () => {
     }
   }
 
-  const handleSectionNavigate = useCallback((section) => {
+  const handleSectionNavigate = useCallback((section, href = '/') => {
     if (typeof window === 'undefined') return
-    window.dispatchEvent(new CustomEvent('spa-navigate', { detail: section }))
-  }, [])
+    
+    // Update active section state
+    setActiveSection(section)
+    
+    if (pathname !== '/') {
+      // Navigate to home first, we'll set the section via query param or effect
+      router.push(`/?section=${section}`)
+    } else {
+      window.dispatchEvent(new CustomEvent('spa-navigate', { detail: section }))
+      // Scroll to top when switching sections on home page
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    
+    // If mobile menu is open, close it
+    setIsMenuOpen(false)
+  }, [pathname, router])
 
   const openMenu = useCallback((section = '/about') => {
     setHoveredLink(section)
@@ -129,11 +144,32 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleSpaNavigate = (event) => {
-      setActiveSection(event?.detail || 'home')
+      const nextSection = event?.detail || 'home'
+      setActiveSection(nextSection)
     }
+    
+    // Initial sync from URL search params
+    const searchParams = new URLSearchParams(window.location.search)
+    const sectionParam = searchParams.get('section')
+    if (sectionParam) {
+      setActiveSection(sectionParam)
+      // Small delay to ensure event is caught by page.js if this is a fresh load
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('spa-navigate', { detail: sectionParam }))
+      }, 100)
+    } else {
+      // Sync with pathname if no query param (e.g. landing directly on /syllabus)
+      const matching = headerLinks.find(link => link.href === pathname)
+      if (matching) {
+        setActiveSection(matching.section)
+      } else if (pathname === '/') {
+        setActiveSection('home')
+      }
+    }
+
     window.addEventListener('spa-navigate', handleSpaNavigate)
     return () => window.removeEventListener('spa-navigate', handleSpaNavigate)
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
     const handleOpenMenu = (e) => {
@@ -229,12 +265,12 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`sticky top-0 w-full z-40 transition-all duration-300 ${
+      <nav className={`fixed top-0 w-full z-40 transition-all duration-500 transform ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm py-2.5' 
+          ? 'translate-y-0 opacity-100 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm py-2.5' 
           : isHeroTopState
-            ? 'bg-transparent border-none shadow-none py-3'
-            : 'bg-white shadow-none py-3'
+            ? 'translate-y-0 opacity-100 bg-transparent py-3'
+            : 'translate-y-0 opacity-100 bg-white shadow-none py-3'
       }`}>
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="relative flex justify-between items-center">
@@ -246,12 +282,12 @@ const Navbar = () => {
 
             <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 lg:gap-10">
               {headerLinks.map((link) => {
-                const isActive = pathname === link.href
+                const isActive = activeSection === link.section
                 return (
                   <button
                     key={`top-${link.href}`}
                     type="button"
-                    onClick={() => handleSectionNavigate(link.section)}
+                    onClick={() => handleSectionNavigate(link.section, link.href)}
                     className={`text-base font-bold tracking-wide transition-colors duration-300 ${
                       isActive
                         ? (isHeroTopState ? 'text-blue-200' : 'text-blue-600')
@@ -377,7 +413,7 @@ const Navbar = () => {
                       onMouseEnter={() => setHoveredLink(link.href)}
                     >
                       <button
-                        onClick={() => setHoveredLink(link.href)}
+                        onClick={() => handleSectionNavigate(link.section, link.href)}
                         className="group flex flex-col md:flex-row md:items-center text-5xl md:text-7xl lg:text-8xl font-black transition-all duration-300 hover:translate-x-6 tracking-tight text-left"
                       >
                         <span className="text-xl md:text-2xl text-white/30 font-bold mb-1 md:mb-0 md:mr-10 group-hover:text-blue-500 transition-colors duration-300">
