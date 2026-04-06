@@ -152,7 +152,7 @@ const Footer = () => {
         {/* Footer Bottom Bar - Thin & Elegant */}
         <div className="pt-4 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 relative">
           <p className="text-[10px] font-black tracking-widest text-gray-500 ">
-            Copyright Â© 2024 <span className="text-gray-900 font-black">ADLOTECH</span>. All rights Served.
+            Copyright @ 2024 <span className="text-gray-900 font-black">ADLOTECH</span>. All rights Served.
           </p>
 
           <div className="flex items-center space-x-12">
