@@ -1,14 +1,11 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FiArrowUp, FiMapPin, FiMail, FiPhone } from 'react-icons/fi'
+import { FiMapPin, FiMail, FiPhone } from 'react-icons/fi'
 import { FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa'
 import BrandLogo from './BrandLogo'
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
 
   return (
     <footer className="bg-[#f4f4f5] border-t border-gray-200 pt-14 pb-6 overflow-hidden">
@@ -27,7 +24,10 @@ const Footer = () => {
             </div>
 
             <p className="mt-6 text-gray-600 text-sm leading-relaxed max-w-[240px]">
-              Adlotech is a Python training institute powered by AdstraDigital, focused on delivering hands-on, career-oriented programming education. We prepare students with real-world skills, expert guidance, and industry exposure. An ISO IAF certified organization.”
+              Adlotech is a Python training institute powered by AdstraDigital, focused on delivering hands-on, career-oriented programming education.
+            </p>
+            <p className="mt-2 text-gray-600 text-sm leading-relaxed max-w-[240px]">
+              We prepare students with real-world skills, expert guidance, and industry exposure.
             </p>
           </div>
 
@@ -166,14 +166,6 @@ const Footer = () => {
             </Link>
           </div>
 
-          <motion.button
-            onClick={scrollToTop}
-            whileHover={{ y: -5 }}
-            className="flex items-center justify-center group bg-white border border-gray-200 w-12 h-12 rounded-full hover:bg-gray-900 hover:border-gray-900 transition-all duration-300 shadow-sm hover:shadow-xl"
-            title="Scroll Top"
-          >
-            <FiArrowUp className="text-gray-500 group-hover:text-white w-5 h-5 transition-colors" />
-          </motion.button>
         </div>
       </div>
     </footer>
@@ -181,4 +173,5 @@ const Footer = () => {
 }
 
 export default Footer
+
 

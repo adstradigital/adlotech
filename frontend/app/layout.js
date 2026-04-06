@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppFloat from '@/components/WhatsAppFloat'
 import EnquireFloat from '@/components/EnquireFloat'
+import ScrollToTop from '@/components/ScrollToTop'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <WhatsAppFloat />
         <EnquireFloat />
+        <ScrollToTop />
       </body>
     </html>
   )

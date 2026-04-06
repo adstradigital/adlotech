@@ -56,7 +56,7 @@ const syllabusSections = [
     courses: true,
     programName: 'Python Full Stack Development',
     subtitle: 'Python and Django Mastery Program',
-    duration: '6 Months Total',
+    duration: '6 Months ',
     fees: 'Flexible Fee Structure',
     curriculumFilename: 'Python Training Program (1).pdf',
     months: [
@@ -87,7 +87,7 @@ const syllabusSections = [
     id: 4,
     title: 'Admissions',
     content:
-      'Admission journey:\n1) Friendly telephonic interview to understand your goals.\n2) Short written coding test with basic questions to check fundamentals.\n3) Direct admission and onboarding.',
+      'Admission journey:\n1) Friendly telephonic interview with trainer to understand your goals.\n2) Short written aptitue test with basic questions to check fundamentals.\n3) Direct admission and onboarding.',
   },
   { id: 5, title: 'Student Life', studentLife: true },
   { id: 6, title: 'Contact', contact: true },
@@ -562,19 +562,15 @@ function StudentLife() {
   const highlights = [
     {
       title: '1:1 Doubt Clearing',
-      text: 'An Indian mentor explains concepts to a 20-year-old learner with patience and clarity.',
     },
     {
       title: 'One-to-One Learning',
-      text: 'Personal feedback loops that strengthen fundamentals and confidence.',
     },
     {
       title: 'Peer Learning Pods',
-      text: 'Small groups that practice together, review code, and build soft skills.',
     },
     {
       title: 'Group Discussions',
-      text: 'Modern collaborative sessions where ideas become working solutions.',
     },
   ]
 
@@ -624,7 +620,6 @@ function StudentLife() {
               className="rounded-xl border border-gray-100 bg-gray-50/70 p-4 hover:bg-white hover:shadow-sm transition-all"
             >
               <h4 className="text-sm font-black text-slate-900">{item.title}</h4>
-              <p className="mt-1 text-xs text-gray-500 font-medium leading-relaxed">{item.text}</p>
             </div>
           ))}
         </div>
@@ -790,3 +785,4 @@ export default function SyllabusPage() {
     </section>
   )
 }
+

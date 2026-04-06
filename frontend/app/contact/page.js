@@ -153,14 +153,18 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-[#14213d] mb-2">Locate us on :</h3>
-                      <a
-                        href="https://www.google.com/maps/search/?api=1&query=Husna+Complex%2C+65%2F2244%2C+Kannur+Rd%2C+near+English+Church%2C+opp.+SL+Towers%2C+West+Nadakkave%2C+West%2C+Nadakkave%2C+Kozhikode%2C+Kerala+673011"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 leading-relaxed font-medium max-w-sm transition-colors hover:text-purple-700"
-                      >
+                      <p className="text-gray-600 leading-relaxed font-medium max-w-sm">
                         Husna Complex, 65/2244, Kannur Rd, near English Church, opp. SL Towers, West Nadakkave, West, Nadakkave, Kozhikode, Kerala 673011
-                      </a>
+                      </p>
+                      <div className="mt-4 overflow-hidden rounded-2xl border border-blue-100 shadow-lg">
+                        <iframe
+                          title="Adlotech location map"
+                          src="https://www.google.com/maps?q=Husna+Complex,+65/2244,+Kannur+Rd,+near+English+Church,+opp.+SL+Towers,+West+Nadakkave,+West,+Nadakkave,+Kozhikode,+Kerala+673011&output=embed"
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          className="h-56 w-full"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

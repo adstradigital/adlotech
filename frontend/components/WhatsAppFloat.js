@@ -13,7 +13,7 @@ const WhatsAppFloat = () => {
   ]
 
   return (
-    <div className="fixed bottom-28 right-6 z-[60] flex flex-col items-end gap-4">
+    <div className="fixed bottom-8 right-6 z-[60] flex flex-col items-end gap-4">
       {/* Popover Menu */}
       <AnimatePresence>
         {isOpen && (

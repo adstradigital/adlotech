@@ -64,19 +64,19 @@ export default function About() {
               </div>
             </div>
             <div className="text-lg leading-relaxed text-slate-700 text-right">
-              <p>
-                To build a future where <span className="font-semibold text-slate-900">every learner masters Python</span><br/> and steps
-                into <span className="font-semibold text-slate-900">meaningful tech careers</span> with confidence.<br/> We aim to be the
-                most trusted Python-only institute in <br/>Calicut, known for{' '}
+              <p className="ml-auto max-w-lg">
+                To build a future where <span className="font-semibold text-slate-900">every learner masters Python</span> and steps
+                into <span className="font-semibold text-slate-900">meaningful tech careers</span> with confidence. We aim to be the
+                most trusted Python-only institute in Calicut, known for{' '}
                 <span className="font-semibold text-slate-900">clarity, outcomes, and growth</span>.
               </p>
             </div>
           </div>
 
-          <div className="flex justify-start -mr-[55vw]">
-            <svg className="h-8 w-[430%] max-w-none" viewBox="0 0 6400 80" fill="none" aria-hidden="true">
+          <div className="w-full overflow-hidden">
+            <svg className="h-8 w-full" viewBox="0 0 6400 80" fill="none" aria-hidden="true">
               <path
-                d="M0 40 q 20 -16 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0 t 40 0"
+                d={`M0 40 q 20 -16 40 0 ${'t 40 0 '.repeat(160)}`}
                 stroke="#3b82f6"
                 strokeWidth="6"
                 strokeLinecap="round"
@@ -86,12 +86,12 @@ export default function About() {
 
           <div className="grid items-center gap-10 lg:grid-cols-[1fr,380px]">
             <div className="text-lg leading-relaxed text-slate-700">
-              <p>
+              <p className="max-w-lg">
                 We are on a mission to <span className="font-semibold text-slate-900">transform learning</span> with{' '}
-                <span className="font-semibold text-slate-900">expert <br/> mentors</span>,{' '}
+                <span className="font-semibold text-slate-900">expert mentors</span>,{' '}
                 <span className="font-semibold text-slate-900">hands-on projects</span>, and{' '}
-                <span className="font-semibold text-slate-900">career-ready training</span> <br/>. Through sureshot learning and
-                internships, we help <br/>learners gain{' '}
+                <span className="font-semibold text-slate-900">career-ready training</span>. Through sureshot learning and
+                internships, we help learners gain{' '}
                 <span className="font-semibold text-slate-900">skills, confidence, and real outcomes</span>.
               </p>
             </div>

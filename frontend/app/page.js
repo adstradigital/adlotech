@@ -32,7 +32,7 @@ export default function Home() {
       body: 'Step-by-step guidance takes you from beginner to advanced coder with ease.'
     },
     {
-      title: 'Industry Experts. Real Outcomes.',
+      title: 'Industry Experts, Real Outcomes.',
       body: 'Train with professionals who deliver practical knowledge and guaranteed results.'
     },
     {
@@ -45,7 +45,7 @@ export default function Home() {
     if (activeSection !== 'home') return
     const interval = setInterval(() => {
       setActiveVideoParagraph((prev) => (prev + 1) % videoParagraphs.length)
-    }, 5000)
+    }, 6500)
 
     return () => clearInterval(interval)
   }, [activeSection, videoParagraphs.length])
@@ -141,6 +141,29 @@ export default function Home() {
     'Aspiring Full Stack Developers'
   ]
 
+  const heroTitle = videoParagraphs[activeVideoParagraph].title
+  const renderHeroTitle = () => {
+    if (heroTitle === 'Master Python, Master Your Future') {
+      return (
+        <>
+          Master Python,
+          <span className="block">Master Your Future</span>
+        </>
+      )
+    }
+
+    if (heroTitle === 'Industry Experts, Real Outcomes.') {
+      return (
+        <>
+          Industry Experts,
+          <span className="block">Real Outcomes.</span>
+        </>
+      )
+    }
+
+    return heroTitle
+  }
+
   return (
     <>
       {activeSection === 'home' && (
@@ -168,11 +191,11 @@ export default function Home() {
                     initial={{ opacity: 0, y: 22 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 1.1, ease: 'easeOut' }}
                     className="space-y-4"
                   >
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-300 drop-shadow-[0_3px_18px_rgba(56,189,248,0.35)]">
-                      {videoParagraphs[activeVideoParagraph].title}
+                      {renderHeroTitle()}
                     </h1>
                     <p className="text-lg md:text-2xl text-slate-100/95 leading-relaxed max-w-2xl">
                       {videoParagraphs[activeVideoParagraph].body}
