@@ -68,7 +68,7 @@ const Footer = () => {
           {/* Section 3: Socialmedia */}
           <div className="md:pt-14 xl:min-w-[220px]">
             <h4 className="text-gray-900 font-black text-xs uppercase tracking-widest mb-8 flex items-center">
-              Socialmedia
+              Socials
               <span className="w-8 h-[1px] bg-gray-300 ml-3"></span>
             </h4>
             <ul className="space-y-4">
