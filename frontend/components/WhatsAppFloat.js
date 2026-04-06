@@ -8,8 +8,8 @@ const WhatsAppFloat = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const whatsappNumbers = [
-    { label: 'Support 1', number: '919567568185' },
-    { label: 'Support 2', number: '919744779574' }
+    { label: 'Counselor 1', number: '919567568185' },
+    { label: 'Counselor 2', number: '919744779574' }
   ]
 
   return (
